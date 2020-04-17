@@ -17,15 +17,16 @@ public class einfachVerketteteListe {
      * @param value - Element, welches eingefügt wird
      */
     public void prepend(int value) {
-        Element newHead = new Element(value);
+        Element newFirstElement = new Element(value);
         int size = this.size();
         if(size==0) {
-            head = newHead;
+            head = new Element();
+            head.setNext(newFirstElement);
         }
         else {
-            Element oldHead = head;
-            head = newHead;
-            head.setNext(oldHead);
+            Element oldFirstElement = head.getNext();
+            head.setNext(newFirstElement);
+            newFirstElement.setNext(oldFirstElement);
         }
     }
 
@@ -34,17 +35,17 @@ public class einfachVerketteteListe {
      * @param value - Element, welches eingefügt wird
      */
     public void append(int value) {
-        Element newElement = new Element(value);
+        Element newLastElement = new Element(value);
         int size = this.size();
         if(size==0) {
             this.prepend(value);
         }
         else {
-            Element pointer = head;
+            Element pointer = head.getNext();
             for(int i=1; i<size; i++) {
                 pointer = pointer.getNext(); // letztes element
             }
-            pointer.setNext(newElement);
+            pointer.setNext(newLastElement);
         }
     }
 
@@ -62,14 +63,14 @@ public class einfachVerketteteListe {
         }
         else {
             if(size==0) {
-                head = newElement;
+                this.prepend(value);
             }
             else {
                 if(index==0) {
                     this.prepend(value); // einfügen an index 0 entspricht am anfang einfügen
                 }
                 else {
-                    Element pointer = head;
+                    Element pointer = head.getNext();
                     for(int i=0; i<index-1; i++) {
                         pointer = pointer.getNext(); // element, das gerade vor dem index gespeichert ist
                     }
@@ -94,10 +95,10 @@ public class einfachVerketteteListe {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
         else if(index==0) {
-            value = head.getData();
+            value = head.getNext().getData();
         }
         else {
-            Element indexElement = head;
+            Element indexElement = head.getNext();
             for(int i=0; i<index; i++) {
                 indexElement = indexElement.getNext();
             }
@@ -117,13 +118,14 @@ public class einfachVerketteteListe {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
         else {
-            Element pointer = head;
+            Element pointer = head.getNext();
             for(int i=0; i<index-1; i++) {
                 pointer = pointer.getNext(); // element, das gerade vor dem index gespeichert ist
             }
 
             if(index==0) { // erstes element
-                head = head.getNext();
+                Element currentSecondElement = head.getNext().getNext();
+                head.setNext(currentSecondElement);
             }
             else if(index==(size-1)) { // letztes element
                 pointer.setNext(null);
@@ -132,7 +134,6 @@ public class einfachVerketteteListe {
                 Element toDelete = pointer.getNext(); // element, das gerade am index gespeichert ist/ gelöscht werden soll
                 Element afterIndex = toDelete.getNext(); // element, das gerade nach dem index gespeichert ist
                 pointer.setNext(afterIndex);
-                toDelete = null;
             }
         }
     }
@@ -146,7 +147,7 @@ public class einfachVerketteteListe {
         int size = this.size();
         boolean contains = false;
         if(size>0) {
-            Element pointer = head;
+            Element pointer = head.getNext();
             for(int i=0; i<size; i++) {
                 if(pointer.getData()==value) {
                     contains = true;
@@ -167,7 +168,7 @@ public class einfachVerketteteListe {
             return 0;
         }
         else {
-            Element pointer = head;
+            Element pointer = head.getNext();
             int counter = 1;
             while(pointer.getNext()!=null) {
                 pointer = pointer.getNext();

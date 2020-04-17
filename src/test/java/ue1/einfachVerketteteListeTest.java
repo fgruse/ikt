@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -17,15 +18,18 @@ public class einfachVerketteteListeTest {
             einfachVerketteteListe l = new einfachVerketteteListe();
 
             // bei leerer Liste
+            assertNull(l.getHead());
             l.prepend(1);
-            assertEquals(1, l.getHead().getData());
-            assertNull(l.getHead().getNext());
+            assertNotNull(l.getHead());
+            assertNull(l.getHead().getData());
+            assertEquals(1, (int) l.getHead().getNext().getData());
+            assertNull(l.getHead().getNext().getNext());
 
             // bei nicht-leerer Liste
             l.prepend(2);
-            assertEquals(2, l.getHead().getData());
-            assertEquals(1, l.getHead().getNext().getData());
-            assertNull(l.getHead().getNext().getNext());
+            assertEquals(2, (int) l.getHead().getNext().getData());
+            assertEquals(1, (int) l.getHead().getNext().getNext().getData());
+            assertNull(l.getHead().getNext().getNext().getNext());
         }
 
         // Testen der append-Methode (hinzufügen am Ende der Liste)
@@ -36,15 +40,15 @@ public class einfachVerketteteListeTest {
 
             // bei leerer Liste
             l.append(5);
-            assertEquals(5, l.getHead().getData());
-            assertNull(l.getHead().getNext());
+            assertEquals(5, (int) l.getHead().getNext().getData());
+            assertNull(l.getHead().getNext().getNext());
 
             // bei nicht-leerer Liste
             l.append(2);
             l.append(19);
-            assertEquals(2, l.getHead().getNext().getData());
-            assertEquals(19, l.getHead().getNext().getNext().getData());
-            assertNull(l.getHead().getNext().getNext().getNext());
+            assertEquals(2, (int) l.getHead().getNext().getNext().getData());
+            assertEquals(19, (int) l.getHead().getNext().getNext().getNext().getData());
+            assertNull(l.getHead().getNext().getNext().getNext().getNext());
         }
 
         // Testen der insert-Methode (einfügen an einem bestimmten Index)
@@ -56,21 +60,21 @@ public class einfachVerketteteListeTest {
             // bei leerer Liste
             l.insert(0, 5);
             assertEquals(1, l.size());
-            assertEquals(5, l.getHead().getData());
-            assertNull(l.getHead().getNext());
+            assertEquals(5, (int) l.getHead().getNext().getData());
+            assertNull(l.getHead().getNext().getNext());
 
             // bei nicht-leerer Liste, einfügen bei Index 0
             l.insert(0, 6);
             assertEquals(2, l.size());
-            assertEquals(6, l.getHead().getData());
-            assertEquals(5, l.getHead().getNext().getData());
+            assertEquals(6, (int) l.getHead().getNext().getData());
+            assertEquals(5, (int) l.getHead().getNext().getNext().getData());
 
             // bei nicht-leerer Liste, zwischendrin einfügen
             l.insert(1, 7);
             assertEquals(3, l.size());
-            assertEquals(6, l.getHead().getData());
-            assertEquals(7, l.getHead().getNext().getData());
-            assertEquals(5, l.getHead().getNext().getNext().getData());
+            assertEquals(6, (int) l.getHead().getNext().getData());
+            assertEquals(7, (int) l.getHead().getNext().getNext().getData());
+            assertEquals(5, (int) l.getHead().getNext().getNext().getNext().getData());
 
         }
 
@@ -138,9 +142,9 @@ public class einfachVerketteteListeTest {
             l.append(7);
             l.remove(1);
             assertEquals(3 , l.size());
-            assertEquals(l.getHead().getData(), 5);
-            assertEquals(l.getHead().getNext().getData(), 19);
-            assertEquals(l.getHead().getNext().getNext().getData(), 7);
+            assertEquals(5, (int) l.getHead().getNext().getData());
+            assertEquals(19, (int) l.getHead().getNext().getNext().getData());
+            assertEquals(7, (int) l.getHead().getNext().getNext().getNext().getData());
         }
 
         @Test
@@ -152,7 +156,7 @@ public class einfachVerketteteListeTest {
             l.append(2);
             l.remove(0);
             assertEquals(3 , l.size());
-            assertEquals(l.getHead().getData(), 2);
+            assertEquals(2, (int) l.getHead().getNext().getData());
         }
 
         @Test
@@ -164,7 +168,7 @@ public class einfachVerketteteListeTest {
             l.append(2);
             l.remove(3);
             assertEquals(3 , l.size());
-            assertEquals(l.getHead().getNext().getNext().getData(), 19);
+            assertEquals(19, (int) l.getHead().getNext().getNext().getNext().getData());
         }
 
         @Test(expected = IndexOutOfBoundsException.class)
@@ -201,7 +205,7 @@ public class einfachVerketteteListeTest {
             assertFalse(l.contains(100));
         }
 
-    // Testen der size-Methode
+        // Testen der size-Methode
 
         @Test
         public void testSize() {

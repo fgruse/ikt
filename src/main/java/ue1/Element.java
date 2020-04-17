@@ -10,7 +10,7 @@ public class Element {
     private Integer data;
     private Element next;
 
-    public Element(int data) {
+    public Element(Integer data) {
         this.data = data;
         this.next = null;
     }
@@ -28,7 +28,7 @@ public class Element {
         this.next = next;
     }
 
-    public int getData() {
+    public Integer getData() {
         return data;
     }
 
