@@ -78,7 +78,7 @@ public class optimierteEinfachVerketteteListeTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testappendAtIndexOutOfBoundsNegative() {
+    public void testInsertAtIndexOutOfBoundsNegative() {
         optimierteEinfachVerketteteListe l = new optimierteEinfachVerketteteListe();
         l.append(5);
         l.append(2);
@@ -87,12 +87,18 @@ public class optimierteEinfachVerketteteListeTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testappendAtIndexOutOfBoundsTooBig() {
+    public void testInsertAtIndexOutOfBoundsTooBig() {
         optimierteEinfachVerketteteListe l = new optimierteEinfachVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
         l.insert(100, 4);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testaInsertAtIndexOutOfBoundsTooBigEmptyList() {
+        optimierteEinfachVerketteteListe l = new optimierteEinfachVerketteteListe();
+        l.insert(1, 4);
     }
 
     // Testen der get-Methode

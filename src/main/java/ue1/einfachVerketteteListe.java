@@ -53,7 +53,7 @@ public class einfachVerketteteListe {
      * Element an einer angegebenen Position einfügen
      * @param value - Element, welches eingefügt wird
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())
      */
     public void insert(int index, int value) throws IndexOutOfBoundsException {
         Element newElement = new Element(value);
@@ -86,7 +86,7 @@ public class einfachVerketteteListe {
      * Element an einer angegebenen Position abrufen
      * @param index - angegebene Position
      * @return value - abgerufenes Element
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public int get(int index) throws IndexOutOfBoundsException {
         int size = this.size();
@@ -110,7 +110,7 @@ public class einfachVerketteteListe {
     /**
      * Element an einer angegebenen Position löschen
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public void remove(int index) throws IndexOutOfBoundsException {
         int size = this.size();

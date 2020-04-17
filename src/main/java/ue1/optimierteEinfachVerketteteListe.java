@@ -2,6 +2,14 @@ package ue1;
 
 public class optimierteEinfachVerketteteListe {
 
+    /*
+    Optimierungsidee für verbesserte Laufzeit:
+    Die Länge der Liste wird nicht mehr mit einer Hilfmethode jedes mal neu ermittelt,
+    sondern in einer Variable innerhalb der Klasse gespeichert und bei jeder Operation,
+    die Einfluss auf die Länge nimmt, geupdatet. Sie ist jederzeit abrufbar, ohne dass
+    jedes Mal wieder eine Schleife durchlaufen werden muss.
+    */
+
     private Element head;
     private int size;
 
@@ -54,7 +62,7 @@ public class optimierteEinfachVerketteteListe {
      * Element an einer angegebenen Position einfügen
      * @param value - Element, welches eingefügt wird
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())
      */
     public void insert(int index, int value) throws IndexOutOfBoundsException {
         Element newElement = new Element(value);
@@ -87,7 +95,7 @@ public class optimierteEinfachVerketteteListe {
      * Element an einer angegebenen Position abrufen
      * @param index - angegebene Position
      * @return value - abgerufenes Element
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public int get(int index) throws IndexOutOfBoundsException {
         int value;
@@ -110,7 +118,7 @@ public class optimierteEinfachVerketteteListe {
     /**
      * Element an einer angegebenen Position löschen
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public void remove(int index) throws IndexOutOfBoundsException {
         if(index>=size || index<0) {
