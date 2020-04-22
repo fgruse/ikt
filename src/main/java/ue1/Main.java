@@ -2,7 +2,6 @@ package ue1;
 
 import de.htwberlin.fiw.profiler.ProfiledClass;
 import de.htwberlin.fiw.profiler.Profiler;
-import java.util.Random;
 
 public class Main extends ProfiledClass
 {
