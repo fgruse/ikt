@@ -21,10 +21,10 @@ public class ProfilerDoppeltVerketteteListe extends ProfiledClass {
         }
         System.out.println("- - - - - - - - - - - - - - - - - - -");
         System.out.println("Ende bis Anfang:");
-        pointer = liste.getTail();
-        while (pointer.getPrev().getData() != null) {
-            pointer = pointer.getPrev();
-            System.out.println(pointer.getData());
+        Element pointerTail = liste.getTail();
+        while (pointerTail.getPrev().getData() != null) {
+            pointerTail = pointerTail.getPrev();
+            System.out.println(pointerTail.getData());
         }
         System.out.println("- - - - - - - - - - - - - - - - - - -");
     }
