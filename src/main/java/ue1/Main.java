@@ -43,7 +43,6 @@ public class Main extends ProfiledClass
         System.out.println("- - - - - - - - - - - - - - - - - - -");
         System.out.println("Anfang bis Ende:");
         Element pointer = liste.getHead();
-        System.out.println(pointer.getData());
         while (pointer.getNext() != null) {
             pointer = pointer.getNext();
             System.out.println(pointer.getData());
