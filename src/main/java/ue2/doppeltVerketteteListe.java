@@ -2,65 +2,20 @@ package ue2;
 
 public class doppeltVerketteteListe {
 
-    public class Eintrag {
+    private Element head;
+    private Element tail;
 
-        @Override
-        public String toString() {
-            return  " Value: " +  inhalt;
-        }
-
-        private final Integer inhalt;
-        private Eintrag vorher;
-        private Eintrag nachher;
-
-        public Eintrag(int inhalt) {
-            this.inhalt=inhalt;
-            this.vorher=null;
-            this.nachher=null;
-        }
-
-        public Eintrag() {
-            this.inhalt=null;
-            this.vorher=null;
-            this.nachher=null;
-        }
-
-        public Eintrag getVorher() {
-            return vorher;
-        }
-
-        public void setVorher(Eintrag vorher) {
-            this.vorher = vorher;
-        }
-
-        public Eintrag getNachher() {
-            return nachher;
-        }
-
-        public void setNachher(Eintrag nachher) {
-            this.nachher = nachher;
-        }
-
-        public int getInhalt() {
-            return inhalt;
-        }
-
+    public Element getHead() {
+        return head;
     }
 
-    private final Eintrag anfang;
-    private final Eintrag ende;
-
-    public Eintrag getAnfang() {
-        return anfang;
-    }
-
-    public Eintrag getEnde() {
-        return ende;
+    public Element getTail() {
+        return tail;
     }
 
     public doppeltVerketteteListe() {
-        this.anfang = new Eintrag();
-        this.ende = new Eintrag();
+        head = null;
+        tail = null;
     }
 
 
@@ -69,7 +24,22 @@ public class doppeltVerketteteListe {
      * @param value - Element, welches eingefügt wird
      */
     public void prepend(int value) {
-
+        Element newElement = new Element(value);
+        if(head==null) {
+            head = new Element();
+            tail = new Element();
+            head.setNext(newElement);
+            newElement.setPrev(head);
+            tail.setPrev(newElement);
+            newElement.setNext(tail);
+        }
+        else {
+            Element currentFirst = head.getNext();
+            head.setNext(newElement);
+            newElement.setNext(currentFirst);
+            newElement.setPrev(head);
+            currentFirst.setPrev(newElement);
+        }
     }
 
     /**
@@ -77,16 +47,16 @@ public class doppeltVerketteteListe {
      * @param value - Element, welches eingefügt wird
      */
     public void append(int value) {
-        Eintrag neu = new Eintrag(value);
-        if(anfang.getNachher()==null && ende.getVorher()==null) {
-            anfang.setNachher(neu);
-            ende.setVorher(neu);
+        Element newElement = new Element(value);
+        if(head==null) {
+            this.prepend(value);
         }
         else {
-            Eintrag altesLetztesElement = ende.getVorher();
-            ende.setVorher(neu);
-            neu.setVorher(altesLetztesElement);
-            altesLetztesElement.setNachher(neu);
+            Element currentLast = tail.getPrev();
+            tail.setPrev(newElement);
+            newElement.setPrev(currentLast);
+            newElement.setNext(tail);
+            currentLast.setNext(newElement);
         }
     }
 
@@ -94,7 +64,7 @@ public class doppeltVerketteteListe {
      * Element an einer angegebenen Position einfügen
      * @param value - Element, welches eingefügt wird
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())
      */
     public void insert(int index, int value) throws IndexOutOfBoundsException {
         int size = this.size();
@@ -102,29 +72,27 @@ public class doppeltVerketteteListe {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
         else {
-            if(size==0) {
-                this.append(value);
+            if(head==null) {
+                this.prepend(value);
             }
             else {
-                Eintrag neu = new Eintrag(value);
-                Eintrag pointer = anfang.getNachher();
+                Element newElement = new Element(value); // element, welches eingefügt werden soll
+                Element pointer = head.getNext();
 
                 for(int i=0; i<index; i++) {
-                    pointer = pointer.getNachher();
+                    pointer = pointer.getNext(); // element, welches gerade am index ist
                 }
 
                 if(index==0) {
-                    this.getAnfang().setNachher(neu);
+                    this.prepend(value);
                 }
                 else {
-                    Eintrag previous = pointer.getVorher();
-                    neu.setVorher(previous);
-                    previous.setNachher(neu);
+                    Element previous = pointer.getPrev(); // element, welches gerade eins vor dem index ist
+                    newElement.setPrev(previous);
+                    newElement.setNext(pointer);
+                    previous.setNext(newElement);
+                    pointer.setPrev(newElement);
                 }
-
-                neu.setNachher(pointer);
-                pointer.setVorher(neu);
-
             }
         }
     }
@@ -133,20 +101,25 @@ public class doppeltVerketteteListe {
      * Element an einer angegebenen Position abrufen
      * @param index - angegebene Position
      * @return value - abgerufenes Element
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public int get(int index) throws IndexOutOfBoundsException {
-        int size = this.size();
         int value;
-        if(index>=size || index<0) {
+        if(head==null || index<0) {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
+        else if(index==0) {
+            value = head.getNext().getData();
+        }
         else {
-            Eintrag pointer = anfang.getNachher();
+            Element indexElement = head.getNext();
             for(int i=0; i<index; i++) {
-                pointer = pointer.getNachher();
+                if(indexElement.getNext()==null) {
+                    throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
+                }
+                indexElement = indexElement.getNext();
             }
-            value = pointer.getInhalt();
+            value = indexElement.getData();
         }
         return value;
     }
@@ -154,7 +127,7 @@ public class doppeltVerketteteListe {
     /**
      * Element an einer angegebenen Position löschen
      * @param index - angegebene Position
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public void remove(int index) throws IndexOutOfBoundsException {
         int size = this.size();
@@ -162,33 +135,34 @@ public class doppeltVerketteteListe {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
         else {
-            Eintrag pointer = anfang.getNachher();
+            Element toDelete = head.getNext();
             for(int i=0; i<index; i++) {
-                pointer = pointer.getNachher();
+                toDelete = toDelete.getNext();
             }
 
-            Eintrag vorgaengerElement;
-            Eintrag nachfolgerElement;
+            Element previousElement;
+            Element nextElement;
 
+            // letztes element löschen
             if(index==(size-1)) {
-                vorgaengerElement = pointer.getVorher();
-                this.getEnde().setVorher(vorgaengerElement);
-                vorgaengerElement.setNachher(null);
+                previousElement = toDelete.getPrev();
+                this.getTail().setPrev(previousElement);
+                previousElement.setNext(tail);
             }
             else if(index==0) {
-                nachfolgerElement = pointer.getNachher();
-                this.getAnfang().setNachher(nachfolgerElement);
-                nachfolgerElement.setVorher(null);
+                nextElement = toDelete.getNext();
+                this.getHead().setNext(nextElement);
+                nextElement.setPrev(head);
             }
             else {
-                vorgaengerElement = pointer.getVorher();
-                nachfolgerElement = pointer.getNachher();
-                vorgaengerElement.setNachher(nachfolgerElement);
-                nachfolgerElement.setVorher(vorgaengerElement);
+                previousElement = toDelete.getPrev();
+                nextElement = toDelete.getNext();
+                previousElement.setNext(nextElement);
+                nextElement.setPrev(previousElement);
             }
 
-            pointer.setVorher(null);
-            pointer.setNachher(null);
+            toDelete.setPrev(null);
+            toDelete.setNext(null);
         }
 
     }
@@ -196,19 +170,18 @@ public class doppeltVerketteteListe {
     /**
      * prüft, ob das übergebene Element in der Liste enthalten ist
      * @param value - Element, welches übergeben wird
-     * @throws IndexOutOfBoundsException if the index is out of range (<0 or >=size())
+     * @return contains - true, wenn Element in Liste vorhanden ist, false wenn nicht
      */
     public boolean contains(int value) throws IndexOutOfBoundsException {
-        int size = this.size();
         boolean contains = false;
-        if(size>0) {
-            Eintrag pointer = anfang.getNachher();
-            for(int i=0; i<size; i++) {
-                if(pointer.getInhalt()==value) {
+        if(head!=null) {
+            Element pointer = head.getNext();
+            while(pointer.getNext()!=null) {
+                if(pointer.getData()==value) {
                     contains = true;
                     break;
                 }
-                pointer = pointer.getNachher();
+                pointer = pointer.getNext();
             }
         }
         return contains;
@@ -219,17 +192,17 @@ public class doppeltVerketteteListe {
      * @return - Länge der Liste
      */
     public int size() {
-        Eintrag pointer = anfang.getNachher();
-        if(pointer==null) {
+        if(head==null) {
             return 0;
         }
         else {
+            Element pointer = head.getNext();
             int counter = 1;
-            while(pointer.getNachher()!=null) {
-                pointer = pointer.getNachher();
+            while(pointer.getNext()!=null) {
+                pointer = pointer.getNext();
                 counter++;
             }
-            return counter;
+            return counter-1;
         }
     }
 
