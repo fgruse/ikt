@@ -76,17 +76,17 @@ public class doppeltVerketteteListe {
                 this.prepend(value);
             }
             else {
-                Element newElement = new Element(value); // element, welches eingefügt werden soll
-                Element pointer = head.getNext();
-
-                for(int i=0; i<index; i++) {
-                    pointer = pointer.getNext(); // element, welches gerade am index ist
-                }
-
                 if(index==0) {
                     this.prepend(value);
                 }
                 else {
+                    Element newElement = new Element(value); // element, welches eingefügt werden soll
+                    Element pointer = head.getNext();
+
+                    for(int i=0; i<index; i++) {
+                        pointer = pointer.getNext(); // element, welches gerade am index ist
+                    }
+
                     Element previous = pointer.getPrev(); // element, welches gerade eins vor dem index ist
                     newElement.setPrev(previous);
                     newElement.setNext(pointer);

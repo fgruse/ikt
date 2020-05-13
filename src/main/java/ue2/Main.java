@@ -12,8 +12,16 @@ public class Main {
         // doppelt verkettete
         Profiler profilerDoppelt = new Profiler(ProfilerDoppeltVerketteteListe.class);
         profilerDoppelt.start();
+        // set
+        Profiler profilerSet = new Profiler(ProfilerSet.class);
+        profilerSet.start();
+        // optimiertes set
+        Profiler profilerOptimiertesSet = new Profiler(ProfilerOptimiertesSet.class);
+        profilerOptimiertesSet.start();
 
-        profilerEinfach.printResults();
-        profilerDoppelt.printResults();
+        //profilerEinfach.printResults();
+        //profilerDoppelt.printResults();
+        //profilerSet.printResults();
+        profilerOptimiertesSet.printResults();
     }
 }
