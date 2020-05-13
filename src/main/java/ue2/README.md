@@ -26,12 +26,26 @@ Es soll nun basierend auf der einfach oder doppelt verketteten Liste ein Set imp
 
 #### Optimierungsideen:
 
-tbd
+#### 1) Size des Sets in Variable speichern
+
+Die Anzahl der Elemente, die sich im Set befindet wird nicht mehr mit einer Methode jedes mal neu ermittelt,
+sondern in einer Variable `size` innerhalb der Klasse gespeichert und bei jeder Operation,
+die Einfluss auf die Länge nimmt, geupdatet. Somit ist die Länge jederzeit abrufbar, ohne dass
+jedes Mal wieder eine Schleife durchlaufen werden muss. Das sollte die Laufzeit deutlich
+verbessern. 
+
+#### 2) Prepend verwenden statt Insert an Index 0
+
+Beim Einfügen in das Set kann man statt der `insert`-Methode der zu Grunde liegenden Liste die `prepend`- Methode verwenden, 
+da diese nicht auf die Länge der Liste zugreift und außerdem weniger if-else-Statements beinhaltet, was die Laufzeit verbessern sollte.
 
 #### Profilingergebnisse:
 
-tbd
+![Profilingergebnisse](Profilingergebnisse3.png) 
 
 #### Fazit:
 
-tbd
+Wie zu erwarten war, ist die zweite Implementierung der Menge schneller und verbraucht auch etwas weniger Speicher.
+Außerdem sind beide Implementierungen der Menge langsamer als die der doppelt verketteten Liste, auf welcher die Implementierungen
+basieren. Das liegt daran, dass beim Einfügen jedes Mal überprüft werden muss, ob ein Element vorhanden ist. Dabei wir eine
+Schleife durchlaufen, welche für die längere Laufzeit verantwortlich ist.
