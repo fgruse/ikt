@@ -6,12 +6,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ProfilerHashMap extends ProfiledClass {
 
     @Override
     public void run() {
-        FIWHashMap map = new FIWHashMap(256);
+        FIWHashMap map = new FIWHashMap(2048);
         URL url = ProfilerHashMap.class.getResource("artikel.csv");
         File csvFile = new File(url.getPath());
         BufferedReader br = null;
@@ -39,9 +40,19 @@ public class ProfilerHashMap extends ProfiledClass {
                 }
             }
         }
-
         System.out.println(map.size());
         System.out.println(map.get("10002165"));
         System.out.println(map.get("10002870"));
+
+
+        /* Analyse der Verteilung der Einträge auf die Buckets
+        ArrayList<Integer> a = map.verteilung();
+        int sum = 0;
+        for (Integer integer : a) {
+            sum = sum + integer;
+        }
+        int durchschnitt = sum/a.size(); // durschnittliche Anzahl der Einträge pro Bucket
+        */
+
     }
 }

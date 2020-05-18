@@ -20,12 +20,12 @@ public class FIWHashMapPair {
         return value;
     }
 
-    public int hash(int num_entries) {
+    public int hash(int buckets) {
         int result = 0;
         for (char c : this.getKey().toCharArray()) {
             result = (result + c);
         }
-        return (result % num_entries);
+        return (result % buckets);
     }
 
     public FIWHashMapPair getNext() {

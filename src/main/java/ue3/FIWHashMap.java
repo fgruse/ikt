@@ -1,5 +1,7 @@
 package ue3;
 
+import java.util.ArrayList;
+
 public class FIWHashMap {
 
     private int buckets;
@@ -26,6 +28,9 @@ public class FIWHashMap {
     public void put(String key, String value) {
         FIWHashMapPair newEntry = new FIWHashMapPair(key, value);
         int hash = newEntry.hash(this.buckets);
+        if(key.equals("10002165") || key.equals("10002870")) {
+            System.out.println(hash);
+        }
         if(this.get(key)==null) { // put value for new key
             this.table[hash] = newEntry;
             this.size++;
@@ -58,7 +63,7 @@ public class FIWHashMap {
         }
         int hash = result % this.buckets;
 
-        FIWHashMapPair entry = table[hash];
+        FIWHashMapPair entry = this.table[hash];
         String value = "";
 
         if(entry==null) { // no entry in map for key
@@ -84,5 +89,26 @@ public class FIWHashMap {
      */
     public int size() {
         return this.size;
+    }
+
+
+    /**
+     * Hilfmethode, um die Verteilung der Einträge auf die Buckets zu analysieren
+     * @return - Liste, welche die Anzahl der Einträge pro Bucket beinhaltet
+     */
+    public ArrayList<Integer> verteilung() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0; i<this.buckets; i++) {
+            FIWHashMapPair pointer = this.table[i];
+            if(pointer!=null) {
+                int counter = 1;
+                while(pointer.getNext()!=null) {
+                    counter++;
+                    pointer = pointer.getNext();
+                }
+                list.add(counter);
+            }
+        }
+        return list;
     }
 }
