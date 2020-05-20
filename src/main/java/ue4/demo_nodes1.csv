@@ -1,0 +1,23 @@
+N,Haus A
+N,Haus B
+N,Haus C
+N,Haus D
+N,Haus E
+N,Haus F
+N,Haus G
+N,Haus H
+N,Hauptleitung
+E,Hauptleitung,Haus D,7
+E,Hauptleitung,Haus C,4
+E,Hauptleitung,Haus B,2
+E,Hauptleitung,Haus A,8
+E,Haus D,Haus E,9
+E,Haus D,Haus C,14
+E,Haus E,Haus C,10
+E,Haus H,Haus C,2
+E,Haus B,Haus H,6
+E,Haus B,Haus G,7
+E,Haus G,Haus H,1
+E,Haus A,Haus F,4
+E,Haus F,Haus G,8
+E,Haus A,Haus H,11
