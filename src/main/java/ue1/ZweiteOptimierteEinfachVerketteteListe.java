@@ -1,6 +1,6 @@
 package ue1;
 
-public class zweiteOptimierteEinfachVerketteteListe {
+public class ZweiteOptimierteEinfachVerketteteListe {
 
     /*
     Optimierungsidee für verbesserte Laufzeit:
@@ -19,7 +19,7 @@ public class zweiteOptimierteEinfachVerketteteListe {
         return head;
     }
 
-    public zweiteOptimierteEinfachVerketteteListe() {
+    public ZweiteOptimierteEinfachVerketteteListe() {
         head = null;
     }
 

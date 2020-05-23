@@ -14,7 +14,7 @@ public class ProfilerEinfachVerketteteListe  extends ProfiledClass {
         //optimierteEinfachVerketteteListe liste = new optimierteEinfachVerketteteListe();
 
         // version 3 (optimiert)
-        zweiteOptimierteEinfachVerketteteListe liste = new zweiteOptimierteEinfachVerketteteListe();
+        ZweiteOptimierteEinfachVerketteteListe liste = new ZweiteOptimierteEinfachVerketteteListe();
 
         Random r = new Random();
         for(int i=0; i<10000; i++) {
