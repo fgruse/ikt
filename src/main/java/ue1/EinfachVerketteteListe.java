@@ -1,24 +1,15 @@
 package ue1;
 
-public class optimierteEinfachVerketteteListe {
-
-    /*
-    Optimierungsidee für verbesserte Laufzeit:
-    Die Länge der Liste wird nicht mehr mit einer Hilfmethode jedes mal neu ermittelt,
-    sondern in einer Variable innerhalb der Klasse gespeichert und bei jeder Operation,
-    die Einfluss auf die Länge nimmt, geupdatet. Sie ist jederzeit abrufbar, ohne dass
-    jedes Mal wieder eine Schleife durchlaufen werden muss.
-    */
+public class EinfachVerketteteListe {
 
     private Element head;
-    private int size;
 
     public Element getHead() {
         return head;
     }
 
-    public int getSize() {
-        return size;
+    public EinfachVerketteteListe() {
+        head = null;
     }
 
     /**
@@ -27,6 +18,7 @@ public class optimierteEinfachVerketteteListe {
      */
     public void prepend(int value) {
         Element newFirstElement = new Element(value);
+        int size = this.size();
         if(size==0) {
             head = new Element();
             head.setNext(newFirstElement);
@@ -36,7 +28,6 @@ public class optimierteEinfachVerketteteListe {
             head.setNext(newFirstElement);
             newFirstElement.setNext(oldFirstElement);
         }
-        size++;
     }
 
     /**
@@ -45,6 +36,7 @@ public class optimierteEinfachVerketteteListe {
      */
     public void append(int value) {
         Element newLastElement = new Element(value);
+        int size = this.size();
         if(size==0) {
             this.prepend(value);
         }
@@ -54,7 +46,6 @@ public class optimierteEinfachVerketteteListe {
                 pointer = pointer.getNext(); // letztes element
             }
             pointer.setNext(newLastElement);
-            size++;
         }
     }
 
@@ -66,6 +57,7 @@ public class optimierteEinfachVerketteteListe {
      */
     public void insert(int index, int value) throws IndexOutOfBoundsException {
         Element newElement = new Element(value);
+        int size = this.size();
         if(index>size || index<0) {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
@@ -85,7 +77,6 @@ public class optimierteEinfachVerketteteListe {
                     Element oldIndex = pointer.getNext(); // element, das gerade am index gespeichert ist
                     pointer.setNext(newElement);
                     newElement.setNext(oldIndex);
-                    size++;
                 }
             }
         }
@@ -98,6 +89,7 @@ public class optimierteEinfachVerketteteListe {
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public int get(int index) throws IndexOutOfBoundsException {
+        int size = this.size();
         int value;
         if(index>=size || index<0) {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
@@ -121,6 +113,7 @@ public class optimierteEinfachVerketteteListe {
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public void remove(int index) throws IndexOutOfBoundsException {
+        int size = this.size();
         if(index>=size || index<0) {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
@@ -142,7 +135,6 @@ public class optimierteEinfachVerketteteListe {
                 Element afterIndex = toDelete.getNext(); // element, das gerade nach dem index gespeichert ist
                 pointer.setNext(afterIndex);
             }
-            size--;
         }
     }
 
@@ -152,6 +144,7 @@ public class optimierteEinfachVerketteteListe {
      * @return contains - true, wenn Element in Liste vorhanden ist, false wenn nicht
      */
     public boolean contains(int value){
+        int size = this.size();
         boolean contains = false;
         if(size>0) {
             Element pointer = head.getNext();
@@ -164,5 +157,24 @@ public class optimierteEinfachVerketteteListe {
             }
         }
         return contains;
+    }
+
+    /**
+     * ruft die Länge der Liste ab (Hilfsmethode)
+     * @return - Länge der Liste
+     */
+    public int size() {
+        if(head==null) {
+            return 0;
+        }
+        else {
+            Element pointer = head.getNext();
+            int counter = 1;
+            while(pointer.getNext()!=null) {
+                pointer = pointer.getNext();
+                counter++;
+            }
+            return counter;
+        }
     }
 }

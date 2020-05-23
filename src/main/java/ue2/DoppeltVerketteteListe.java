@@ -1,42 +1,44 @@
-package ue1;
+package ue2;
 
-public class zweiteOptimierteEinfachVerketteteListe {
-
-    /*
-    Optimierungsidee für verbesserte Laufzeit:
-    Um zu prüfen, ob die Liste noch leer ist, wird nicht mehr überprüft, ob die Länge der Liste Null ist (size == 0),
-    sondern ob der Head-Pointer bereits auf etwas zeigt (head == null). Somit spart man sich z.B. bei der
-    append- und prepend-Methode die Schleife zum ermitteln der Länge komplett.
-    Die get-Methode kann außerdem auch so umgeschrieben, dass sie die Länge der Liste nicht mehr benötigt,
-    somit fällt eine weitere Schleife weg.
-    Beim Profiling werden nur diese drei Methoden verwendet und deswegen lag mein Fokus darauf, erst einmal diese
-    zu verbessern. Die gleiche Herangehensweise kann aber auch auf einige der anderen Methoden angewandt werden.
-    */
+public class DoppeltVerketteteListe {
 
     private Element head;
+    private Element tail;
 
     public Element getHead() {
         return head;
     }
 
-    public zweiteOptimierteEinfachVerketteteListe() {
-        head = null;
+    public Element getTail() {
+        return tail;
     }
+
+    public DoppeltVerketteteListe() {
+        head = null;
+        tail = null;
+    }
+
 
     /**
      * Element am Anfang einfügen
      * @param value - Element, welches eingefügt wird
      */
     public void prepend(int value) {
-        Element newFirstElement = new Element(value);
+        Element newElement = new Element(value);
         if(head==null) {
             head = new Element();
-            head.setNext(newFirstElement);
+            tail = new Element();
+            head.setNext(newElement);
+            newElement.setPrev(head);
+            tail.setPrev(newElement);
+            newElement.setNext(tail);
         }
         else {
-            Element oldFirstElement = head.getNext();
-            head.setNext(newFirstElement);
-            newFirstElement.setNext(oldFirstElement);
+            Element currentFirst = head.getNext();
+            head.setNext(newElement);
+            newElement.setNext(currentFirst);
+            newElement.setPrev(head);
+            currentFirst.setPrev(newElement);
         }
     }
 
@@ -45,16 +47,16 @@ public class zweiteOptimierteEinfachVerketteteListe {
      * @param value - Element, welches eingefügt wird
      */
     public void append(int value) {
-        Element newLastElement = new Element(value);
+        Element newElement = new Element(value);
         if(head==null) {
             this.prepend(value);
         }
         else {
-            Element pointer = head.getNext();
-            while(pointer.getNext()!=null) {
-                pointer = pointer.getNext();
-            }
-            pointer.setNext(newLastElement);
+            Element currentLast = tail.getPrev();
+            tail.setPrev(newElement);
+            newElement.setPrev(currentLast);
+            newElement.setNext(tail);
+            currentLast.setNext(newElement);
         }
     }
 
@@ -65,7 +67,6 @@ public class zweiteOptimierteEinfachVerketteteListe {
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())
      */
     public void insert(int index, int value) throws IndexOutOfBoundsException {
-        Element newElement = new Element(value);
         int size = this.size();
         if(index>size || index<0) {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
@@ -76,16 +77,21 @@ public class zweiteOptimierteEinfachVerketteteListe {
             }
             else {
                 if(index==0) {
-                    this.prepend(value); // einfügen an index 0 entspricht am anfang einfügen
+                    this.prepend(value);
                 }
                 else {
+                    Element newElement = new Element(value); // element, welches eingefügt werden soll
                     Element pointer = head.getNext();
-                    for(int i=0; i<index-1; i++) {
-                        pointer = pointer.getNext(); // element, das gerade vor dem index gespeichert ist
+
+                    for(int i=0; i<index; i++) {
+                        pointer = pointer.getNext(); // element, welches gerade am index ist
                     }
-                    Element oldIndex = pointer.getNext(); // element, das gerade am index gespeichert ist
-                    pointer.setNext(newElement);
-                    newElement.setNext(oldIndex);
+
+                    Element previous = pointer.getPrev(); // element, welches gerade eins vor dem index ist
+                    newElement.setPrev(previous);
+                    newElement.setNext(pointer);
+                    previous.setNext(newElement);
+                    pointer.setPrev(newElement);
                 }
             }
         }
@@ -129,24 +135,36 @@ public class zweiteOptimierteEinfachVerketteteListe {
             throw new IndexOutOfBoundsException("Die Liste enthält kein Element an Index " + index + ".");
         }
         else {
-            Element pointer = head.getNext();
-            for(int i=0; i<index-1; i++) {
-                pointer = pointer.getNext(); // element, das gerade vor dem index gespeichert ist
+            Element toDelete = head.getNext();
+            for(int i=0; i<index; i++) {
+                toDelete = toDelete.getNext();
             }
 
-            if(index==0) { // erstes element
-                Element currentSecondElement = head.getNext().getNext();
-                head.setNext(currentSecondElement);
+            Element previousElement;
+            Element nextElement;
+
+            // letztes element löschen
+            if(index==(size-1)) {
+                previousElement = toDelete.getPrev();
+                this.getTail().setPrev(previousElement);
+                previousElement.setNext(tail);
             }
-            else if(index==(size-1)) { // letztes element
-                pointer.setNext(null);
+            else if(index==0) {
+                nextElement = toDelete.getNext();
+                this.getHead().setNext(nextElement);
+                nextElement.setPrev(head);
             }
-            else { // dazwischen
-                Element toDelete = pointer.getNext(); // element, das gerade am index gespeichert ist/ gelöscht werden soll
-                Element afterIndex = toDelete.getNext(); // element, das gerade nach dem index gespeichert ist
-                pointer.setNext(afterIndex);
+            else {
+                previousElement = toDelete.getPrev();
+                nextElement = toDelete.getNext();
+                previousElement.setNext(nextElement);
+                nextElement.setPrev(previousElement);
             }
+
+            toDelete.setPrev(null);
+            toDelete.setNext(null);
         }
+
     }
 
     /**
@@ -154,12 +172,11 @@ public class zweiteOptimierteEinfachVerketteteListe {
      * @param value - Element, welches übergeben wird
      * @return contains - true, wenn Element in Liste vorhanden ist, false wenn nicht
      */
-    public boolean contains(int value){
-        int size = this.size();
+    public boolean contains(int value) throws IndexOutOfBoundsException {
         boolean contains = false;
-        if(size>0) {
+        if(head!=null) {
             Element pointer = head.getNext();
-            for(int i=0; i<size; i++) {
+            while(pointer.getNext()!=null) {
                 if(pointer.getData()==value) {
                     contains = true;
                     break;
@@ -185,7 +202,8 @@ public class zweiteOptimierteEinfachVerketteteListe {
                 pointer = pointer.getNext();
                 counter++;
             }
-            return counter;
+            return counter-1;
         }
     }
+
 }

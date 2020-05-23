@@ -2,13 +2,13 @@ package ue2;
 
 public class Set {
 
-    private doppeltVerketteteListe list;
+    private DoppeltVerketteteListe list;
 
     public Set() {
-        this.list = new doppeltVerketteteListe();
+        this.list = new DoppeltVerketteteListe();
     }
 
-    public doppeltVerketteteListe getList() {
+    public DoppeltVerketteteListe getList() {
         return list;
     }
 

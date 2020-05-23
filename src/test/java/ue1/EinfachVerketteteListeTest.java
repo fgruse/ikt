@@ -8,13 +8,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class zweiteOptimierteEinfachVerketteteListeTest {
+public class EinfachVerketteteListeTest {
+
 
         // Testen der prepend-Methode (hinzufügen am Anfang der Liste)
 
         @Test
         public void testPrepend() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
 
             // bei leerer Liste
             assertNull(l.getHead());
@@ -35,7 +36,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testAppend() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
 
             // bei leerer Liste
             l.append(5);
@@ -54,7 +55,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testInsert() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
 
             // bei leerer Liste
             l.insert(0, 5);
@@ -74,11 +75,12 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
             assertEquals(6, (int) l.getHead().getNext().getData());
             assertEquals(7, (int) l.getHead().getNext().getNext().getData());
             assertEquals(5, (int) l.getHead().getNext().getNext().getNext().getData());
+
         }
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testInsertAtIndexOutOfBoundsNegative() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -87,7 +89,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testInsertAtIndexOutOfBoundsTooBig() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -96,15 +98,15 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testaInsertAtIndexOutOfBoundsTooBigEmptyList() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
-            l.insert(3, 4);
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
+            l.insert(1, 4);
         }
 
         // Testen der get-Methode
 
         @Test
         public void testGet() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -117,7 +119,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testGetIndexOutOfBoundsNegative() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -127,7 +129,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testGetIndexOutOfBoundsTooBig() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -135,17 +137,11 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
             l.get(100);
         }
 
-        @Test(expected = IndexOutOfBoundsException.class)
-        public void testGetIndexOutOfBoundsTooBigEmptyList() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
-            l.get(100);
-        }
-
         // Testen der remove-Methode an einem bestimmten Index
 
         @Test
         public void testRemove() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -159,7 +155,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testRemoveAtIndex0() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -171,7 +167,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testRemoveAtLastIndex() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -183,7 +179,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testRemoveAtIndexOutOfBoundsNegative() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -193,7 +189,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test(expected = IndexOutOfBoundsException.class)
         public void testRemoveAtIndexOutOfBoundsTooBig() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -205,7 +201,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testContains() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
             l.append(5);
             l.append(2);
             l.append(19);
@@ -219,7 +215,7 @@ public class zweiteOptimierteEinfachVerketteteListeTest {
 
         @Test
         public void testSize() {
-            zweiteOptimierteEinfachVerketteteListe l = new zweiteOptimierteEinfachVerketteteListe();
+            EinfachVerketteteListe l = new EinfachVerketteteListe();
 
             // bei leerer Liste
             assertEquals(0, l.size());
