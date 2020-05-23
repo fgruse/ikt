@@ -8,7 +8,8 @@ public class Main extends ProfiledClass
 
     public static void main(String[] args) {
         // Profiler profiler = new Profiler(Main.class);
-        Profiler profiler = new Profiler(ProfilerEinfachVerketteteListe.class);
+        // Profiler profiler = new Profiler(ProfilerEinfachVerketteteListe.class);
+        Profiler profiler = new Profiler(ProfilerFeldListe.class);
         profiler.start();
         profiler.printResults();
     }
