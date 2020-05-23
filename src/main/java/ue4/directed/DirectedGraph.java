@@ -1,9 +1,13 @@
-package ue4;
+package ue4.directed;
+
+import ue4.Liste;
+import ue4.Listenelement;
+import ue4.Menge;
 
 public class DirectedGraph {
 
-    private Menge<Node> nodes;
-    private Menge<Edge> edges;
+    private Menge<NodeDG> nodes;
+    private Menge<EdgeDG> edges;
 
     public DirectedGraph() {
         this.nodes = new Menge<>();
@@ -14,7 +18,7 @@ public class DirectedGraph {
      * gibt eine Liste mit allen Knoten im Graphen zurück
      * @return Liste mit allen Knoten im Graphen
      */
-    public Liste<Node> getNodes() {
+    public Liste<NodeDG> getNodes() {
         return this.nodes.getList();
     }
 
@@ -24,17 +28,17 @@ public class DirectedGraph {
      * @param name - Name des Knoten
      */
     public void insertNode(String name) {
-        this.nodes.add(new Node(name));
+        this.nodes.add(new NodeDG(name));
     }
 
     /**
      * gibt den Knoten mit dem angegebenen Namen zurück
      * @return Knoten mit dem angegebenen Namen
      */
-     public Node getNode(String name) {
+     public NodeDG getNode(String name) {
          int index = -1;
          if(this.nodes.getSize()>0) {
-             Listenelement<Node> pointer = this.nodes.getList().getHead().getNext();
+             Listenelement<NodeDG> pointer = this.nodes.getList().getHead().getNext();
              for(int i=0; i<this.nodes.getSize(); i++) {
                  if(pointer.getData().getName().equals(name)) {
                      index = i;
@@ -57,12 +61,12 @@ public class DirectedGraph {
       * @param weight - Kantengewicht
       */
      public void makeEdge(String from, String to, double weight) {
-         Node start = this.getNode(from);
-         Node end = this.getNode(to);
+         NodeDG start = this.getNode(from);
+         NodeDG end = this.getNode(to);
          if(end!=null && start!=null) {
              this.getNode(from).addChild(end);
              this.getNode(to).addParent(start);
-             Edge edge = new Edge(weight, start, end);
+             EdgeDG edge = new EdgeDG(weight, start, end);
              this.edges.add(edge);
          }
      }
@@ -71,7 +75,7 @@ public class DirectedGraph {
      * gibt eine Liste mit allen Kanten im Graphen zurück
      * @return Liste mit allen Kanten im Graphen
      */
-    public Liste<Edge> getEdges() {
+    public Liste<EdgeDG> getEdges() {
         return this.edges.getList();
     }
 
@@ -82,7 +86,7 @@ public class DirectedGraph {
     public double getWeight() {
         double sum = 0.0;
         if(this.edges.getSize()>0) {
-            Listenelement<Edge> pointer = this.edges.getList().getHead();
+            Listenelement<EdgeDG> pointer = this.edges.getList().getHead();
             while(pointer.getNext()!=null) {
                 pointer = pointer.getNext();
                 sum += pointer.getData().getWeight();

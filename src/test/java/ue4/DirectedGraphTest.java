@@ -1,6 +1,9 @@
 package ue4;
 
 import org.junit.Test;
+import ue4.directed.DirectedGraph;
+import ue4.directed.EdgeDG;
+import ue4.directed.NodeDG;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -15,8 +18,8 @@ public class DirectedGraphTest {
         assertEquals(0, d.getNodes().getSize());
         assertEquals(0, d.getEdges().getSize());
 
-        Node n1 = new Node("Knoten 1");
-        Node n2 = new Node("Knoten 2");
+        NodeDG n1 = new NodeDG("Knoten 1");
+        NodeDG n2 = new NodeDG("Knoten 2");
 
         d.insertNode("Knoten 1");
         d.insertNode("Knoten 2");
@@ -45,7 +48,7 @@ public class DirectedGraphTest {
         d.makeEdge("Knoten 1", "Knoten 2", 5.9);
         assertEquals(1, d.getEdges().getSize());
         assertEquals(2, d.getNodes().getSize());
-        assertTrue(d.getEdges().contains(new Edge(5.9, new Node("Knoten 1"), new Node("Knoten 2"))));
+        assertTrue(d.getEdges().contains(new EdgeDG(5.9, new NodeDG("Knoten 1"), new NodeDG("Knoten 2"))));
 
         // Anpassung der Grade/ Eltern/ Kinder der Nodes
         assertEquals(1, d.getNode("Knoten 1").getOutputDegree());

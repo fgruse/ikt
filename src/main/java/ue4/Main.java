@@ -1,7 +1,6 @@
 package ue4;
 
 import de.htwberlin.fiw.profiler.Profiler;
-import ue3.ProfilerHashMap;
 
 public class Main {
 

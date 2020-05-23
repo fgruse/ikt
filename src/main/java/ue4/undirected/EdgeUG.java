@@ -1,14 +1,14 @@
-package ue4;
+package ue4.undirected;
 
 import java.util.Objects;
 
-public class EdgeUndirectedGraph {
+public class EdgeUG {
 
     private double weight;
-    private NodeUndirectedGraph node1;
-    private NodeUndirectedGraph node2;
+    private NodeUG node1;
+    private NodeUG node2;
 
-    public EdgeUndirectedGraph(final double weight, final NodeUndirectedGraph node1, final NodeUndirectedGraph node2) {
+    public EdgeUG(final double weight, final NodeUG node1, final NodeUG node2) {
         this.weight = weight;
         this.node1 = node1;
         this.node2 = node2;
@@ -26,7 +26,7 @@ public class EdgeUndirectedGraph {
      * gibt den ersten Knoten der Kante zurück
      * @return erster Knoten
      */
-    public NodeUndirectedGraph getNode1() {
+    public NodeUG getNode1() {
         return node1;
     }
 
@@ -34,7 +34,7 @@ public class EdgeUndirectedGraph {
      * Gibt den zweiten der Kante zurückk
      * @return zweiter Knoten
      */
-    public NodeUndirectedGraph getNode2() {
+    public NodeUG getNode2() {
         return node2;
     }
 
@@ -42,7 +42,7 @@ public class EdgeUndirectedGraph {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final EdgeUndirectedGraph edge = (EdgeUndirectedGraph) o;
+        final EdgeUG edge = (EdgeUG) o;
         return Double.compare(edge.getWeight(), this.weight) == 0 &&
                 (Objects.equals(this.node1, edge.getNode1()) &&
                 Objects.equals(this.node2, edge.getNode2())) ||

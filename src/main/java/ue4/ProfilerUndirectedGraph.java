@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import ue4.directed.DirectedGraph;
+import ue4.undirected.UndirectedGraph;
 
 public class ProfilerUndirectedGraph extends ProfiledClass {
 

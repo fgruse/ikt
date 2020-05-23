@@ -1,14 +1,14 @@
-package ue4;
+package ue4.directed;
 
 import java.util.Objects;
 
-public class Edge {
+public class EdgeDG {
 
     private double weight;
-    private Node start;
-    private Node end;
+    private NodeDG start;
+    private NodeDG end;
 
-    public Edge(final double weight, final Node start, final Node end) {
+    public EdgeDG(final double weight, final NodeDG start, final NodeDG end) {
         this.weight = weight;
         this.start = start;
         this.end = end;
@@ -26,7 +26,7 @@ public class Edge {
      * gibt den Ausgangsknoten der Kante zurück
      * @return Ausgangsknoten
      */
-    public Node getStart() {
+    public NodeDG getStart() {
         return start;
     }
 
@@ -34,7 +34,7 @@ public class Edge {
      * Gibt den Endknoten der Kante zurückk
      * @return Endknoten
      */
-    public Node getEnd() {
+    public NodeDG getEnd() {
         return end;
     }
 
@@ -42,7 +42,7 @@ public class Edge {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Edge edge = (Edge) o;
+        final EdgeDG edge = (EdgeDG) o;
         return Double.compare(edge.getWeight(), this.weight) == 0 &&
                 Objects.equals(this.start, edge.getStart()) &&
                 Objects.equals(this.end, edge.getEnd());

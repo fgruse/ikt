@@ -1,6 +1,10 @@
 package ue4;
 
 import org.junit.Test;
+import ue4.directed.DirectedGraph;
+import ue4.undirected.EdgeUG;
+import ue4.undirected.NodeUG;
+import ue4.undirected.UndirectedGraph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,8 +20,8 @@ public class UndirectedGraphTest {
         assertEquals(0, d.getNodes().getSize());
         assertEquals(0, d.getEdges().getSize());
 
-        NodeUndirectedGraph n1 = new NodeUndirectedGraph("Knoten 1");
-        NodeUndirectedGraph n2 = new NodeUndirectedGraph("Knoten 2");
+        NodeUG n1 = new NodeUG("Knoten 1");
+        NodeUG n2 = new NodeUG("Knoten 2");
 
         d.insertNode("Knoten 1");
         d.insertNode("Knoten 2");
@@ -46,7 +50,7 @@ public class UndirectedGraphTest {
         d.makeEdge("Knoten 1", "Knoten 2", 5.9);
         assertEquals(1, d.getEdges().getSize());
         assertEquals(2, d.getNodes().getSize());
-        assertTrue(d.getEdges().contains(new EdgeUndirectedGraph(5.9, new NodeUndirectedGraph("Knoten 1"), new NodeUndirectedGraph("Knoten 2"))));
+        assertTrue(d.getEdges().contains(new EdgeUG(5.9, new NodeUG("Knoten 1"), new NodeUG("Knoten 2"))));
 
         // Anpassung der Grade/ Eltern/ Kinder der Nodes
         assertEquals(1, d.getNode("Knoten 1").getDegree());

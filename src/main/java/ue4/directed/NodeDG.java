@@ -1,14 +1,16 @@
-package ue4;
+package ue4.directed;
 
 import java.util.Objects;
+import ue4.Liste;
+import ue4.Menge;
 
-public class Node {
+public class NodeDG {
 
     private String name;
-    private Menge<Node> children;
-    private Menge<Node> parents;
+    private Menge<NodeDG> children;
+    private Menge<NodeDG> parents;
 
-    public Node(final String name) {
+    public NodeDG(final String name) {
         this.name = name;
         this.children = new Menge<>();
         this.parents = new Menge<>();
@@ -18,7 +20,7 @@ public class Node {
      * gibt eine Liste mit den Kindknoten des Knoten zurück
      * @return Liste mit den Kindknoten des Knoten
      */
-    public Liste<Node> getChildren(){
+    public Liste<NodeDG> getChildren(){
         return this.children.getList();
     }
 
@@ -26,7 +28,7 @@ public class Node {
      * fügt einen Kindknoten hinzu
      * @param child - Kindknoten
      */
-    public void addChild(Node child) {
+    public void addChild(NodeDG child) {
         this.children.add(child);
     }
 
@@ -34,7 +36,7 @@ public class Node {
      * fügt einen Elternknoten hinzu
      * @param parent - Kindknoten
      */
-    public void addParent(Node parent) {
+    public void addParent(NodeDG parent) {
         this.parents.add(parent);
     }
 
@@ -90,7 +92,7 @@ public class Node {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Node node = (Node) o;
+        final NodeDG node = (NodeDG) o;
         return Objects.equals(this.name, node.getName());
     }
 }
