@@ -6,7 +6,7 @@ import java.util.Random;
 public class ProfilerDoppeltVerketteteListe extends ProfiledClass {
 
     public void run() {
-        doppeltVerketteteListe liste = new doppeltVerketteteListe();
+        DoppeltVerketteteListe liste = new DoppeltVerketteteListe();
 
         Random r = new Random();
         for(int i=0; i<10000; i++) {

@@ -2,15 +2,15 @@ package ue2;
 
 public class OptimiertesSet {
 
-    private doppeltVerketteteListe list;
+    private DoppeltVerketteteListe list;
     private int size;
 
     public OptimiertesSet() {
-        this.list = new doppeltVerketteteListe();
+        this.list = new DoppeltVerketteteListe();
         this.size = 0;
     }
 
-    public doppeltVerketteteListe getList() {
+    public DoppeltVerketteteListe getList() {
         return list;
     }
 

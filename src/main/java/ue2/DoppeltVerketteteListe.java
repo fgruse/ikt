@@ -1,6 +1,6 @@
 package ue2;
 
-public class doppeltVerketteteListe {
+public class DoppeltVerketteteListe {
 
     private Element head;
     private Element tail;
@@ -13,7 +13,7 @@ public class doppeltVerketteteListe {
         return tail;
     }
 
-    public doppeltVerketteteListe() {
+    public DoppeltVerketteteListe() {
         head = null;
         tail = null;
     }

@@ -8,13 +8,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class doppeltVerketteteListeTest {
+public class DoppeltVerketteteListeTest {
 
     // Testen der prepend-Methode (hinzufügen am Anfang der Liste)
 
     @Test
     public void testPrepend() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
 
         // bei leerer Liste
         assertNull(l.getHead());
@@ -42,7 +42,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testAppend() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
 
         // bei leerer Liste
         l.append(5);
@@ -66,7 +66,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testInsert() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
 
         // bei leerer Liste
         l.insert(0, 5);
@@ -99,7 +99,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testInsertAtIndexOutOfBoundsNegative() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -108,7 +108,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testInsertAtIndexOutOfBoundsTooBig() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -117,7 +117,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testaInsertAtIndexOutOfBoundsTooBigEmptyList() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.insert(1, 4);
     }
 
@@ -125,7 +125,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testGet() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -138,7 +138,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetIndexOutOfBoundsNegative() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -148,7 +148,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetIndexOutOfBoundsTooBig() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -160,7 +160,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testRemove() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -176,7 +176,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testRemoveAtIndex0() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -190,7 +190,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testRemoveAtLastIndex() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -204,7 +204,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveAtIndexOutOfBoundsNegative() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -214,7 +214,7 @@ public class doppeltVerketteteListeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveAtIndexOutOfBoundsTooBig() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -226,7 +226,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testContains() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
         l.append(5);
         l.append(2);
         l.append(19);
@@ -240,7 +240,7 @@ public class doppeltVerketteteListeTest {
 
     @Test
     public void testSize() {
-        doppeltVerketteteListe l = new doppeltVerketteteListe();
+        DoppeltVerketteteListe l = new DoppeltVerketteteListe();
 
         // bei leerer Liste
         assertEquals(0, l.size());
