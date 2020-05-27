@@ -56,7 +56,8 @@ public class FIWHashMap {
     public String get(String key) {
         int result = 0;
         for (char c : key.toCharArray()) {
-            result = (result + c);
+            result = (result + c*c);
+            // result = (result + c) // alte hash-funktion
         }
         int hash = result % this.buckets;
 
