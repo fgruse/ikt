@@ -28,9 +28,6 @@ public class FIWHashMap {
     public void put(String key, String value) {
         FIWHashMapPair newEntry = new FIWHashMapPair(key, value);
         int hash = newEntry.hash(this.buckets);
-        if(key.equals("10002165") || key.equals("10002870")) {
-            System.out.println(hash);
-        }
         if(this.get(key)==null) { // put value for new key
             this.table[hash] = newEntry;
             this.size++;
