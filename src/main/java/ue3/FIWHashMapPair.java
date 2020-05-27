@@ -23,7 +23,8 @@ public class FIWHashMapPair {
     public int hash(int buckets) {
         int result = 0;
         for (char c : this.getKey().toCharArray()) {
-            result = (result + c);
+            result = (result + c*c);
+            // result = (result + c); // alte hash-funktion
         }
         return (result % buckets);
     }

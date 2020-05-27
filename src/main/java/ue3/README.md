@@ -7,8 +7,9 @@ Es soll eine HashMap selbst implementiert und dann die Performance der Implement
 ### Implementierung:
 
 Der HashMap liegt ein Array von Key-Value-Paaren zu Grunde. Die Länge des Arrays sind die sogenannten Buckets. 
-Die Hash-Funktion basiert darauf, dass der jeweilige Key in ein Char-Array umgewandelt und dann basierend auf 
-den ASCII-Werten der jeweiligen Chars aufsummiert wird. Anschließend wird die Summe modulo Anzahl der Buckets gerechnet.
+Die ursprüngliche Hash-Funktion basiert darauf, dass der jeweilige Key in ein Char-Array umgewandelt und dann basierend auf 
+den ASCII-Werten der jeweiligen Chars aufsummiert wird. In der verbesserten Hash-Funktion werden die ASCII-Werte vor dem 
+Aufsummieren noch quadriert. Anschließend wird die Summe modulo Anzahl der Buckets gerechnet.
 Bei Hash-Collision wird innerhalb des jeweiligen Buckets eine verkettete Liste verwendet. Dadurch können trotzdem alle 
 Key-Value-Paare mit dem gleichen Hash gespeichert werden, ohne dass sie sich gegenseitig überschreiben. Außerdem 
 ist so möglich, dass mehr Paare gespeichert werden, als es Buckets gibt.
@@ -42,4 +43,6 @@ Verschlechterung mehr, da viele Buckets bei höherer Bucket-Anzahl einfach leer 
 kleiner als 9 bzw. die Anzahl der Buckets, die Einträge enthalten, wird nicht größer 677).
 
 Daraus folgt, dass die Performance mit einer anderen Hash-Funktion, die die Einträge auch bei hoher Bucket-Anzahl gleichmäßiger verteilt, vermutlich
-verbessert werden könnte. Dadurch könnte die Geschwindigkeit des Arrays im Vergleich zur verketteten Liste besser ausgenutzt werden.
+verbessert werden könnte. Dadurch könnte die Geschwindigkeit des Arrays im Vergleich zur verketteten Liste besser ausgenutzt werden. Selbst bei der 
+verbesserten Hash-Funktion, sieht man beim Profiling jedoch kaum Unterschied. Das liegt vermutlich daran, dass im Profiler zu wenige Zugriffe gemacht werden,
+als dass die Messungen wirklich start abweichen würden.

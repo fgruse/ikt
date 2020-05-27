@@ -44,15 +44,15 @@ public class ProfilerHashMap extends ProfiledClass {
         System.out.println(map.get("10002165"));
         System.out.println(map.get("10002870"));
 
-
-        /* Analyse der Verteilung der Einträge auf die Buckets
+        /*
+        //Analyse der Verteilung der Einträge auf die Buckets
         ArrayList<Integer> a = map.verteilung();
         int sum = 0;
         for (Integer integer : a) {
             sum = sum + integer;
         }
         int durchschnitt = sum/a.size(); // durschnittliche Anzahl der Einträge pro Bucket
+        System.out.println(durchschnitt);
         */
-
     }
 }
