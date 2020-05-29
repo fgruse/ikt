@@ -43,5 +43,10 @@ public class FIWHashMapTest {
         assertEquals("Max Mustermann", m.get("FI 1W"));
 
         assertEquals(5, m.size());
+
+        m.put("FI 1W", "Maximilian Mustermann");
+
+        assertEquals("Maximilian Mustermann", m.get("FI 1W"));
+        assertEquals(5, m.size());
     }
 }

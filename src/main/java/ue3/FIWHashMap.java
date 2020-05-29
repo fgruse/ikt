@@ -28,7 +28,7 @@ public class FIWHashMap {
     public void put(String key, String value) {
         FIWHashMapPair newEntry = new FIWHashMapPair(key, value);
         int hash = newEntry.hash(this.buckets);
-        if(this.get(key)==null) { // put value for new key
+        if(this.table[hash]==null) { // put value for new key
             this.table[hash] = newEntry;
             this.size++;
         }
@@ -37,13 +37,23 @@ public class FIWHashMap {
             if(possiblyExistingKeyForHash.equals(key)) { // overwrite value for existing key
                 this.table[hash] = newEntry;
             }
-            else { // deal with hash collision --> linked list
+            else {
                 FIWHashMapPair existingEntry = this.table[hash];
+                boolean existing = false;
                 while(existingEntry.getNext()!=null) {
                     existingEntry = existingEntry.getNext();
+                    if(existingEntry.getKey().equals(key)) {
+                        existing = true;
+                        break;
+                    }
                 }
-                existingEntry.setNext(newEntry);
-                this.size++;
+                if(existing) { // overwrite value for existing key in linked list
+                    existingEntry.setValue(value);
+                }
+                else { // deal with hash collision --> add to linked list
+                    existingEntry.setNext(newEntry);
+                    this.size++;
+                }
             }
         }
     }
@@ -54,13 +64,7 @@ public class FIWHashMap {
      * @return - Wert des Key-Value-Paars, der ausgegeben wird
      */
     public String get(String key) {
-        int result = 0;
-        for (char c : key.toCharArray()) {
-            result = (result + c*c);
-            // result = (result + c) // alte hash-funktion
-        }
-        int hash = result % this.buckets;
-
+        int hash = FIWHashMapPair.hash(this.buckets, key);
         FIWHashMapPair entry = this.table[hash];
         String value = "";
 
