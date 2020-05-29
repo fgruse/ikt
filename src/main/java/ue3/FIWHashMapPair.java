@@ -20,9 +20,17 @@ public class FIWHashMapPair {
         return value;
     }
 
+    public void setValue(final String value) {
+        this.value = value;
+    }
+
     public int hash(int buckets) {
+        return hash(buckets, this.getKey());
+    }
+
+    public static int hash(int buckets, String key) {
         int result = 0;
-        for (char c : this.getKey().toCharArray()) {
+        for (char c : key.toCharArray()) {
             result = (result + c*c);
             // result = (result + c); // alte hash-funktion
         }
