@@ -1,4 +1,4 @@
-package ue4.directed;
+package ue4.versuch1;
 
 import ue4.Liste;
 import ue4.Listenelement;

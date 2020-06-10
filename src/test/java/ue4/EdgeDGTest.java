@@ -1,9 +1,8 @@
 package ue4;
 
 import org.junit.Test;
-import ue4.directed.DirectedGraph;
-import ue4.directed.EdgeDG;
-import ue4.directed.NodeDG;
+import ue4.versuch1.EdgeDG;
+import ue4.versuch1.NodeDG;
 
 import static org.junit.Assert.assertEquals;
 

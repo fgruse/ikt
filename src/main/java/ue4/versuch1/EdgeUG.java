@@ -1,4 +1,4 @@
-package ue4.undirected;
+package ue4.versuch1;
 
 import java.util.Objects;
 

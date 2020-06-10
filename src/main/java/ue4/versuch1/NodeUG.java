@@ -1,9 +1,8 @@
-package ue4.undirected;
+package ue4.versuch1;
 
 import java.util.Objects;
 import ue4.Liste;
 import ue4.Menge;
-import ue4.directed.NodeDG;
 
 public class NodeUG {
 

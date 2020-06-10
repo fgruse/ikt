@@ -1,7 +1,7 @@
 package ue4;
 
 import org.junit.Test;
-import ue4.undirected.NodeUG;
+import ue4.versuch1.NodeUG;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

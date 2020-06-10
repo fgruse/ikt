@@ -1,10 +1,10 @@
 package ue4;
 
 import org.junit.Test;
-import ue4.directed.DirectedGraph;
-import ue4.undirected.EdgeUG;
-import ue4.undirected.NodeUG;
-import ue4.undirected.UndirectedGraph;
+import ue4.versuch1.DirectedGraph;
+import ue4.versuch1.EdgeUG;
+import ue4.versuch1.NodeUG;
+import ue4.versuch1.UndirectedGraph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
