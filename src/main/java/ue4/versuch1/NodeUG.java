@@ -45,7 +45,7 @@ public class NodeUG {
      * @param adjacentNode - Kindknoten
      * @param weight - Kantengewicht
      */
-    public void addEdge(NodeUG adjacentNode, Double weight) {
+    public void addEdge(NodeUG adjacentNode, float weight) {
         this.addAdjacentNode(adjacentNode);
         this.edges.add(new EdgeUG(weight, this, adjacentNode));
     }

@@ -1,4 +1,4 @@
-package ue4;
+package ue4.versuch1;
 
 import org.junit.Test;
 import ue4.versuch1.DirectedGraph;
@@ -40,17 +40,17 @@ public class UndirectedGraphTest {
         UndirectedGraph d = new UndirectedGraph();
 
         // keine Kante einfügen, wenn Knoten noch nicht vorhanden sind
-        d.makeEdge("Knoten 1", "Knoten 2", 5.9);
+        d.makeEdge("Knoten 1", "Knoten 2", 5.9F);
         assertEquals(0, d.getEdges().getSize());
         assertEquals(0.0, d.getWeight(), 0.000001);
 
         // Kante einfügen
         d.insertNode("Knoten 1");
         d.insertNode("Knoten 2");
-        d.makeEdge("Knoten 1", "Knoten 2", 5.9);
+        d.makeEdge("Knoten 1", "Knoten 2", 5.9F);
         assertEquals(1, d.getEdges().getSize());
         assertEquals(2, d.getNodes().getSize());
-        assertTrue(d.getEdges().contains(new EdgeUG(5.9, new NodeUG("Knoten 1"), new NodeUG("Knoten 2"))));
+        assertTrue(d.getEdges().contains(new EdgeUG(5.9F, new NodeUG("Knoten 1"), new NodeUG("Knoten 2"))));
 
         // Anpassung der Grade/ Eltern/ Kinder der Nodes
         assertEquals(1, d.getNode("Knoten 1").getDegree());
@@ -59,11 +59,11 @@ public class UndirectedGraphTest {
         // Weight des Graphen
         assertEquals(5.9, d.getWeight(), 0.000001);
         d.insertNode("Knoten 3");
-        d.makeEdge("Knoten 3", "Knoten 1", 4.1);
+        d.makeEdge("Knoten 3", "Knoten 1", 4.1F);
         assertEquals(10.0, d.getWeight(), 0.000001);
 
         // Reihenfolge der Knoten ist egal --> Kante wird nur einmal eingefügt
-        d.makeEdge("Knoten 2", "Knoten 1", 17.1);
+        d.makeEdge("Knoten 2", "Knoten 1", 17.1F);
         assertEquals(10.0, d.getWeight(), 0.000001);
     }
 
@@ -76,12 +76,12 @@ public class UndirectedGraphTest {
         g.insertNode("D");
         g.insertNode("E");
         g.insertNode("F");
-        g.makeEdge("E", "A", 1.0);
-        g.makeEdge("A","C", 9.0);
-        g.makeEdge("A", "D", 5.0);
-        g.makeEdge("D", "B", 10.0);
-        g.makeEdge("C", "B", 3.0);
-        g.makeEdge("B", "F", 7.0);
+        g.makeEdge("E", "A", 1.0F);
+        g.makeEdge("A","C", 9.0F);
+        g.makeEdge("A", "D", 5.0F);
+        g.makeEdge("D", "B", 10.0F);
+        g.makeEdge("C", "B", 3.0F);
+        g.makeEdge("B", "F", 7.0F);
 
         assertEquals(6, g.getNodes().getSize());
         assertEquals(6, g.getEdges().getSize());

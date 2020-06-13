@@ -60,7 +60,7 @@ public class DirectedGraph {
       * @param to - Name des Endknoten
       * @param weight - Kantengewicht
       */
-     public void makeEdge(String from, String to, double weight) {
+     public void makeEdge(String from, String to, float weight) {
          NodeDG start = this.getNode(from);
          NodeDG end = this.getNode(to);
          if(end!=null && start!=null) {

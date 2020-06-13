@@ -1,4 +1,4 @@
-package ue4;
+package ue4.versuch1;
 
 import org.junit.Test;
 import ue4.versuch1.EdgeDG;

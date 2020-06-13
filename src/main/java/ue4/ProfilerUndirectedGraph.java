@@ -29,7 +29,7 @@ public class ProfilerUndirectedGraph extends ProfiledClass {
                     System.out.println("added Node");
                 }
                 else{
-                    g.makeEdge(edgeOrNode[1], edgeOrNode[2], Double.parseDouble(edgeOrNode[3]));
+                    g.makeEdge(edgeOrNode[1], edgeOrNode[2], Float.parseFloat(edgeOrNode[3]));
                     System.out.println("added Edge");
                 }
             }

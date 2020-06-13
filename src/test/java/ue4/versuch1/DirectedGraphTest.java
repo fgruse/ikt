@@ -1,4 +1,4 @@
-package ue4;
+package ue4.versuch1;
 
 import org.junit.Test;
 import ue4.versuch1.DirectedGraph;
@@ -38,25 +38,25 @@ public class DirectedGraphTest {
         DirectedGraph d = new DirectedGraph();
 
         // keine Kante einfügen, wenn Knoten noch nicht vorhanden sind
-        d.makeEdge("Knoten 1", "Knoten 2", 5.9);
+        d.makeEdge("Knoten 1", "Knoten 2", 5.9F);
         assertEquals(0, d.getEdges().getSize());
         assertEquals(0.0, d.getWeight(), 0.000001);
 
         // Kante einfügen
         d.insertNode("Knoten 1");
         d.insertNode("Knoten 2");
-        d.makeEdge("Knoten 1", "Knoten 2", 5.9);
+        d.makeEdge("Knoten 1", "Knoten 2", 5.9F);
         assertEquals(1, d.getEdges().getSize());
         assertEquals(2, d.getNodes().getSize());
-        assertTrue(d.getEdges().contains(new EdgeDG(5.9, new NodeDG("Knoten 1"), new NodeDG("Knoten 2"))));
+        assertTrue(d.getEdges().contains(new EdgeDG(5.9F, new NodeDG("Knoten 1"), new NodeDG("Knoten 2"))));
 
         // Anpassung der Grade/ Eltern/ Kinder der Nodes
         assertEquals(1, d.getNode("Knoten 1").getOutputDegree());
         assertEquals(1, d.getNode("Knoten 2").getInputDegree());
 
         // Weight des Graphen
-        assertEquals(5.9, d.getWeight(), 0.000001);
-        d.makeEdge("Knoten 2", "Knoten 1", 4.1);
-        assertEquals(10.0, d.getWeight(), 0.000001);
+        assertEquals(5.9F, d.getWeight(), 0.000001);
+        d.makeEdge("Knoten 2", "Knoten 1", 4.1F);
+        assertEquals(10.0F, d.getWeight(), 0.000001);
     }
 }

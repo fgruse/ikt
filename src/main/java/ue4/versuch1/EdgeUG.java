@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class EdgeUG {
 
-    private double weight;
+    private float weight;
     private NodeUG node1;
     private NodeUG node2;
 
-    public EdgeUG(final double weight, final NodeUG node1, final NodeUG node2) {
+    public EdgeUG(final float weight, final NodeUG node1, final NodeUG node2) {
         this.weight = weight;
         this.node1 = node1;
         this.node2 = node2;
@@ -18,7 +18,7 @@ public class EdgeUG {
      * gibt das Kantengewicht zurück (eine Fließkommazahl)
      * @return Kantengewicht
      */
-    public double getWeight() {
+    public float getWeight() {
         return weight;
     }
 

@@ -60,7 +60,7 @@ public class UndirectedGraph {
      * @param node2 - Name des zweiten Knoten
      * @param weight - Kantengewicht
      */
-    public void makeEdge(String node1, String node2, double weight) {
+    public void makeEdge(String node1, String node2, float weight) {
         NodeUG n1 = this.getNode(node1);
         NodeUG n2 = this.getNode(node2);
         if(n2!=null && n1!=null) {
@@ -119,7 +119,7 @@ public class UndirectedGraph {
                 System.out.println(iteration);
                 iteration++;
                 // finden der kante, die von einem bereits besuchten knoten ausgeht, mit dem geringsten gewicht
-                EdgeUG lowestWeight = new EdgeUG(Double.MAX_VALUE, null, null);
+                EdgeUG lowestWeight = new EdgeUG(Float.MAX_VALUE, null, null);
                 for(int i=0; i<visitedNodes.getSize(); i++) {
                     NodeUG currentVisitedNode = visitedNodes.getList().get(i);
                     for(int j=0; j<currentVisitedNode.getEdges().getSize(); j++) {
