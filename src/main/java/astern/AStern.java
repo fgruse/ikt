@@ -18,32 +18,20 @@ public class AStern extends ProfiledClass {
     }
 
     public KnotenListe computeShortestPath() {
-        KnotenListe queue = new KnotenListe();
-        final Knoten start = g.getOrte()[startIndex];
-        final Knoten ziel = g.getOrte()[zielIndex];
+        Knoten[] alleOrte = g.getOrte();
+        KnotenQueue queue = new KnotenQueue();
+        final Knoten start = alleOrte[startIndex];
+        final Knoten ziel = alleOrte[zielIndex];
         start.setKostenStartBisZuMir(0.0);
         start.setKostenBisZielGeschaetzt(0.0);
         start.setParent(start);
 
-        queue.append(start);
+        queue.insert(start);
         KnotenListe weg = new KnotenListe();
 
         while(queue.size()>0) {
-            // suche nach knoten mit höchster priority --> geringste gesamtkosten
-            int index = 0;
-            Knoten minimumKostenInQueue = queue.get(index);
-            if(queue.size()>1) {
-                for(int i=1; i<queue.size(); i++) {
-                    Knoten k = queue.get(i);
-                    if(k.getGesamtkosten() < minimumKostenInQueue.getGesamtkosten()) {
-                        minimumKostenInQueue = k;
-                        index = i;
-                    }
-                }
-            }
-
-            // knoten mit priority gefunden, wird aus queue entfernt & bearbeitet
-            queue.remove(index);
+            // knoten mit höchster priorität = geringste gesamtkosten wird aus queue entfernt
+            Knoten minimumKostenInQueue = queue.remove();
             // final Knoten currentKnoten = alle.get(minimumKostenInQueue.getIndex());
             if(minimumKostenInQueue.isNotAbgearbeitet()) {
                 minimumKostenInQueue.setAbgearbeitet(true);
@@ -59,17 +47,21 @@ public class AStern extends ProfiledClass {
                 }
 
                 // nachbarn zur queue hinzufügen
-                Knoten[] nachbarn = g.getNachbarorte(minimumKostenInQueue.getIndex());
-                for(Knoten k: nachbarn) {
-                    if(k.isNotAbgearbeitet()) {
-                        double predictionBisZiel = Graph.getDistanz(k, ziel);
-                        double distanzNachbarParent = Graph.getDistanz(k, minimumKostenInQueue);
-                        double startBisK = minimumKostenInQueue.getKostenStartBisZuMir() + distanzNachbarParent;
-                        if((startBisK + predictionBisZiel) < k.getGesamtkosten()) {
-                            k.setParent(minimumKostenInQueue);
-                            k.setKostenStartBisZuMir(startBisK);
-                            k.setKostenBisZielGeschaetzt(predictionBisZiel);
-                            queue.append(k);
+                final boolean[] istNachbar = g.getAdjazenzmatrix()[minimumKostenInQueue.getIndex()];
+                for (int i=0; i<istNachbar.length; i++) {
+                    if(istNachbar[i]) {
+                        Knoten k = alleOrte[i];
+                        if(k.isNotAbgearbeitet()) {
+                            double predictionBisZiel = Graph.getDistanz(k, ziel);
+                            double distanzNachbarParent = Graph.getDistanz(k, minimumKostenInQueue);
+                            double startBisK = minimumKostenInQueue.getKostenStartBisZuMir() + distanzNachbarParent;
+                            double gesamtkosten = startBisK + predictionBisZiel;
+                            if(gesamtkosten < k.getGesamtkosten()) {
+                                k.setParent(minimumKostenInQueue);
+                                k.setKostenStartBisZuMir(startBisK);
+                                k.setKostenBisZielGeschaetzt(predictionBisZiel);
+                                queue.insert(k);
+                            }
                         }
                     }
                 }

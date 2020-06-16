@@ -4,10 +4,6 @@ public class KnotenListe {
 
     private Knoten[] elements;
 
-    public KnotenListe(final Knoten[] elements) {
-        this.elements = elements;
-    }
-
     public KnotenListe() {
         this.elements = new Knoten[0];
     }

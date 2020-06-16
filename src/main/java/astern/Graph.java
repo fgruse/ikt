@@ -100,8 +100,4 @@ public class Graph {
     public Knoten[] getOrte() {
         return orte;
     }
-
-    public int getOrtanzahl() {
-        return ortanzahl;
-    }
 }

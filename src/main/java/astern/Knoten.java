@@ -10,8 +10,9 @@ public class Knoten {
     private final int y;
     private Knoten parent;
     private double kostenStartBisZuMir;
-    private double kostenBisZielGeschaetzt;
+    private double gesamtkosten;
     private boolean abgearbeitet;
+    private int numOfSuccessors;
 
     public Knoten(final Graph graph, final int index, final int x, final int y) {
         this.graph = graph;
@@ -20,8 +21,9 @@ public class Knoten {
         this.y = y;
         this.parent = null;
         this.kostenStartBisZuMir = Double.POSITIVE_INFINITY;
-        this.kostenBisZielGeschaetzt = Double.POSITIVE_INFINITY;
+        this.gesamtkosten = Double.POSITIVE_INFINITY;
         this.abgearbeitet = false;
+        this.numOfSuccessors = 0;
     }
 
     public int getIndex() {
@@ -42,6 +44,11 @@ public class Knoten {
 
     public void setParent(final Knoten parent) {
         this.parent = parent;
+        this.numOfSuccessors = parent.getNumOfSuccessors() + 1;
+    }
+
+    public int getNumOfSuccessors() {
+        return numOfSuccessors;
     }
 
     public double getKostenStartBisZuMir() {
@@ -52,16 +59,12 @@ public class Knoten {
         this.kostenStartBisZuMir = kosten;
     }
 
-    public double getKostenBisZielGeschaetzt() {
-        return kostenBisZielGeschaetzt;
-    }
-
     public void setKostenBisZielGeschaetzt(final double kostenBisZielGeschaetzt) {
-        this.kostenBisZielGeschaetzt = kostenBisZielGeschaetzt;
+        this.gesamtkosten = kostenBisZielGeschaetzt + this.kostenStartBisZuMir;
     }
 
     public double getGesamtkosten() {
-        return kostenStartBisZuMir + kostenBisZielGeschaetzt;
+        return gesamtkosten;
     }
 
     public boolean isNotAbgearbeitet() {
