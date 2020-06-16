@@ -1,5 +1,7 @@
 package astern;
 
+import java.util.Objects;
+
 public class Knoten {
 
     private final Graph graph;
@@ -9,6 +11,7 @@ public class Knoten {
     private Knoten parent;
     private double kostenStartBisZuMir;
     private double kostenBisZielGeschaetzt;
+    private boolean abgearbeitet;
 
     public Knoten(final Graph graph, final int index, final int x, final int y) {
         this.graph = graph;
@@ -16,8 +19,9 @@ public class Knoten {
         this.x = x;
         this.y = y;
         this.parent = null;
-        this.kostenStartBisZuMir = 0;
-        this.kostenBisZielGeschaetzt = 0;
+        this.kostenStartBisZuMir = Double.POSITIVE_INFINITY;
+        this.kostenBisZielGeschaetzt = Double.POSITIVE_INFINITY;
+        this.abgearbeitet = false;
     }
 
     public int getIndex() {
@@ -54,5 +58,33 @@ public class Knoten {
 
     public void setKostenBisZielGeschaetzt(final double kostenBisZielGeschaetzt) {
         this.kostenBisZielGeschaetzt = kostenBisZielGeschaetzt;
+    }
+
+    public double getGesamtkosten() {
+        return kostenStartBisZuMir + kostenBisZielGeschaetzt;
+    }
+
+    public boolean isNotAbgearbeitet() {
+        return !abgearbeitet;
+    }
+
+    public void setAbgearbeitet(final boolean abgearbeitet) {
+        this.abgearbeitet = abgearbeitet;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Knoten knoten = (Knoten) o;
+        return index == knoten.index &&
+                x == knoten.x &&
+                y == knoten.y &&
+                Objects.equals(graph, knoten.graph);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, x, y);
     }
 }

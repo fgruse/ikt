@@ -6,8 +6,8 @@ import ue1.FeldListe;
 public class Graph {
 
     private final int ortanzahl;
-    private boolean[][] adjazenzmatrix;
-    private Knoten[] orte;
+    private final boolean[][] adjazenzmatrix;
+    private final Knoten[] orte;
 
     public Graph(final int ortanzahl) {
         this.ortanzahl = ortanzahl;
@@ -89,7 +89,8 @@ public class Graph {
         final int x2 = knoten2.getX();
         final int y1 = knoten.getY();
         final int y2 = knoten2.getY();
-        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
     public boolean[][] getAdjazenzmatrix() {

@@ -1,56 +1,77 @@
 package astern;
 
+import de.htwberlin.fiw.profiler.ProfiledClass;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class AStern {
+public class AStern extends ProfiledClass {
 
-    public ArrayList<Knoten> astern(final String file, final int startIndex, final int zielIndex) {
+    private final Graph g;
+    private final int startIndex;
+    private final int zielIndex;
 
-        Graph g = readFile(file);
-        ArrayList<Knoten> queue = new ArrayList<>();
-        ArrayList<Knoten> abgearbeitet = new ArrayList<>();
+    public AStern(final String file, final Integer startIndex, final Integer zielIndex) {
+        this.g = readFile(file);
+        this.startIndex = startIndex;
+        this.zielIndex = zielIndex;
+    }
+
+    public KnotenListe computeShortestPath() {
+        KnotenListe queue = new KnotenListe();
         final Knoten start = g.getOrte()[startIndex];
         final Knoten ziel = g.getOrte()[zielIndex];
+        start.setKostenStartBisZuMir(0.0);
+        start.setKostenBisZielGeschaetzt(0.0);
         start.setParent(start);
 
-        queue.add(start);
-        ArrayList<Knoten> weg = new ArrayList<>();
-        while(!queue.isEmpty()) {
+        queue.append(start);
+        KnotenListe weg = new KnotenListe();
+
+        while(queue.size()>0) {
+            // suche nach knoten mit höchster priority --> geringste gesamtkosten
             int index = 0;
-            Knoten min = queue.get(index);
+            Knoten minimumKostenInQueue = queue.get(index);
             if(queue.size()>1) {
                 for(int i=1; i<queue.size(); i++) {
                     Knoten k = queue.get(i);
-                    double kostenWert = k.getKostenStartBisZuMir() + k.getKostenBisZielGeschaetzt();
-                    if(kostenWert < (min.getKostenStartBisZuMir() + min.getKostenBisZielGeschaetzt())) {
-                        min = k;
+                    if(k.getGesamtkosten() < minimumKostenInQueue.getGesamtkosten()) {
+                        minimumKostenInQueue = k;
                         index = i;
                     }
                 }
             }
 
+            // knoten mit priority gefunden, wird aus queue entfernt & bearbeitet
             queue.remove(index);
-            abgearbeitet.add(min);
-            if(min.equals(ziel)) {
-                while(!min.getParent().equals(min)){
-                    weg.add(min);
-                    min = min.getParent();
+            // final Knoten currentKnoten = alle.get(minimumKostenInQueue.getIndex());
+            if(minimumKostenInQueue.isNotAbgearbeitet()) {
+                minimumKostenInQueue.setAbgearbeitet(true);
+
+                // ziel erreicht, weg abgeschlossen
+                if(minimumKostenInQueue.equals(ziel)) {
+                    while(!minimumKostenInQueue.getParent().equals(minimumKostenInQueue)){
+                        weg.prepend(minimumKostenInQueue);
+                        minimumKostenInQueue = minimumKostenInQueue.getParent();
+                    }
+                    weg.prepend(start);
+                    break;
                 }
-                weg.add(start);
-                break;
-            }
-            Knoten[] nachbarn = g.getNachbarorte(min.getIndex());
-            for(Knoten k: nachbarn) {
-                if(!queue.contains(k) && !abgearbeitet.contains(k)) {
-                    // länge vom weg zwischen elternknoten und start + länge weg k bis elternknoten
-                    k.setParent(min);
-                    k.setKostenStartBisZuMir(k.getParent().getKostenStartBisZuMir() + Graph.getDistanz(k, k.getParent()));
-                    // geschätzte länge vom weg von k bis ziel
-                    k.setKostenBisZielGeschaetzt(Graph.getDistanz(k, ziel));
-                    queue.add(k);
+
+                // nachbarn zur queue hinzufügen
+                Knoten[] nachbarn = g.getNachbarorte(minimumKostenInQueue.getIndex());
+                for(Knoten k: nachbarn) {
+                    if(k.isNotAbgearbeitet()) {
+                        double predictionBisZiel = Graph.getDistanz(k, ziel);
+                        double distanzNachbarParent = Graph.getDistanz(k, minimumKostenInQueue);
+                        double startBisK = minimumKostenInQueue.getKostenStartBisZuMir() + distanzNachbarParent;
+                        if((startBisK + predictionBisZiel) < k.getGesamtkosten()) {
+                            k.setParent(minimumKostenInQueue);
+                            k.setKostenStartBisZuMir(startBisK);
+                            k.setKostenBisZielGeschaetzt(predictionBisZiel);
+                            queue.append(k);
+                        }
+                    }
                 }
             }
         }
@@ -59,9 +80,8 @@ public class AStern {
 
     static public Graph readFile(final String file) {
         Graph graph = new Graph(10000);
-        BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             for(String line = br.readLine(); line != null; line = br.readLine()) {
                 String[] eintrag = line.split(",");
                 if(eintrag[0].equals("O")) {
@@ -85,9 +105,21 @@ public class AStern {
         return graph;
     }
 
-    public double getWeglaenge(final Knoten[] weg) {
-        // TODO
-        return 1F;
+    @Override
+    public void run() {
+        KnotenListe weg = this.computeShortestPath();
+        int knotenInWeg = weg.size();
+        if(knotenInWeg>0) {
+            StringBuilder wegString = new StringBuilder();
+            for (int i = 0; i< knotenInWeg; i++) {
+                wegString.append(weg.get(i).getIndex()).append(" ");
+            }
+            System.out.println("Weg gefunden der Laenge " + g.getOrte()[zielIndex].getKostenStartBisZuMir());
+            System.out.println();
+            System.out.println("Weg: ( " + wegString + ")");
+        }
+        else {
+            System.out.println("Leider kein Weg gefunden!");
+        }
     }
-
 }
