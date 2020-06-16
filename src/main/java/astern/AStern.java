@@ -17,41 +17,30 @@ public class AStern extends ProfiledClass {
         this.zielIndex = zielIndex;
     }
 
-    public KnotenListe computeShortestPath() {
+    public Knoten[] computeShortestPath() {
         Knoten[] alleOrte = g.getOrte();
-        KnotenQueue queue = new KnotenQueue();
         final Knoten start = alleOrte[startIndex];
         final Knoten ziel = alleOrte[zielIndex];
         start.setKostenStartBisZuMir(0.0);
         start.setKostenBisZielGeschaetzt(0.0);
         start.setParent(start);
-
+        KnotenQueue queue = new KnotenQueue();
         queue.insert(start);
-        KnotenListe weg = new KnotenListe();
 
         while(queue.size()>0) {
-            // knoten mit höchster priorität = geringste gesamtkosten wird aus queue entfernt
             Knoten minimumKostenInQueue = queue.remove();
-            // final Knoten currentKnoten = alle.get(minimumKostenInQueue.getIndex());
-            if(minimumKostenInQueue.isNotAbgearbeitet()) {
+            if(!minimumKostenInQueue.isAbgearbeitet()) {
                 minimumKostenInQueue.setAbgearbeitet(true);
 
-                // ziel erreicht, weg abgeschlossen
                 if(minimumKostenInQueue.equals(ziel)) {
-                    while(!minimumKostenInQueue.getParent().equals(minimumKostenInQueue)){
-                        weg.prepend(minimumKostenInQueue);
-                        minimumKostenInQueue = minimumKostenInQueue.getParent();
-                    }
-                    weg.prepend(start);
-                    break;
+                    return getPath(start, ziel);
                 }
 
-                // nachbarn zur queue hinzufügen
                 final boolean[] istNachbar = g.getAdjazenzmatrix()[minimumKostenInQueue.getIndex()];
                 for (int i=0; i<istNachbar.length; i++) {
                     if(istNachbar[i]) {
                         Knoten k = alleOrte[i];
-                        if(k.isNotAbgearbeitet()) {
+                        if(!k.isAbgearbeitet()) {
                             double predictionBisZiel = Graph.getDistanz(k, ziel);
                             double distanzNachbarParent = Graph.getDistanz(k, minimumKostenInQueue);
                             double startBisK = minimumKostenInQueue.getKostenStartBisZuMir() + distanzNachbarParent;
@@ -67,6 +56,19 @@ public class AStern extends ProfiledClass {
                 }
             }
         }
+        return new Knoten[0];
+    }
+
+    static public Knoten[] getPath(Knoten start, Knoten ziel) {
+        int length = ziel.getNumOfSuccessors();
+        Knoten[] weg = new Knoten[length];
+        int counter = length-1;
+        while(!ziel.getParent().equals(ziel)){
+            weg[counter] = ziel;
+            ziel = ziel.getParent();
+            counter--;
+        }
+        weg[0] = start;
         return weg;
     }
 
@@ -99,12 +101,12 @@ public class AStern extends ProfiledClass {
 
     @Override
     public void run() {
-        KnotenListe weg = this.computeShortestPath();
-        int knotenInWeg = weg.size();
+        Knoten[] weg = this.computeShortestPath();
+        int knotenInWeg = weg.length;
         if(knotenInWeg>0) {
             StringBuilder wegString = new StringBuilder();
-            for (int i = 0; i< knotenInWeg; i++) {
-                wegString.append(weg.get(i).getIndex()).append(" ");
+            for(final Knoten knoten : weg) {
+                wegString.append(knoten.getIndex()).append(" ");
             }
             System.out.println("Weg gefunden der Laenge " + g.getOrte()[zielIndex].getKostenStartBisZuMir());
             System.out.println();

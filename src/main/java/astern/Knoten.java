@@ -67,8 +67,8 @@ public class Knoten {
         return gesamtkosten;
     }
 
-    public boolean isNotAbgearbeitet() {
-        return !abgearbeitet;
+    public boolean isAbgearbeitet() {
+        return abgearbeitet;
     }
 
     public void setAbgearbeitet(final boolean abgearbeitet) {
