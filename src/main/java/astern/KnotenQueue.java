@@ -14,15 +14,20 @@ public class KnotenQueue {
      */
     public void insert(Knoten value) {
         final int size = this.elements.size();
-        if(size ==0) {
+        if(size==0) {
             this.elements.prepend(value);
         }
         else {
+            int z = -1;
             for(int j=0; j<size; j++) {
                 if(value.getGesamtkosten() < this.elements.get(j).getGesamtkosten()) {
                     this.elements.insert(j, value);
+                    z = j;
                     break;
                 }
+            }
+            if(z == -1) {
+                this.elements.insert(size, value);
             }
         }
     }
