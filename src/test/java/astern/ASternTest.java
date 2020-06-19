@@ -22,6 +22,7 @@ public class ASternTest {
         assertEquals(6289, weg[9].getIndex());
         assertEquals(1176, weg[10].getIndex());
         assertEquals(1, weg[11].getIndex());
+        assertEquals(84681, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -41,6 +42,7 @@ public class ASternTest {
         assertEquals(8124, weg[10].getIndex());
         assertEquals(5214, weg[11].getIndex());
         assertEquals(9999, weg[12].getIndex());
+        assertEquals(94180, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -58,6 +60,7 @@ public class ASternTest {
         assertEquals(5944, weg[8].getIndex());
         assertEquals(3482, weg[9].getIndex());
         assertEquals(3000, weg[10].getIndex());
+        assertEquals(72351, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -85,6 +88,7 @@ public class ASternTest {
         assertEquals(4203, weg[18].getIndex());
         assertEquals(9790, weg[19].getIndex());
         assertEquals(9261, weg[20].getIndex());
+        assertEquals(139166, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -96,6 +100,7 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("20 4920 505 ", wegString.toString());
+        assertEquals(13414, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -107,6 +112,7 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("3243 404 6757 6849 2499 447 7022 4750 7017 5875 ", wegString.toString());
+        assertEquals(61726, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -118,6 +124,7 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("200 7859 7713 2955 4567 2331 3315 2062 7523 801 ", wegString.toString());
+        assertEquals(68327, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -129,6 +136,7 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("90 4441 5872 8024 129 1008 887 2826 1890 4794 8964 1111 ", wegString.toString());
+        assertEquals(81102, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -140,6 +148,7 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("9900 3678 9532 3236 5971 2192 1286 2319 3687 3560 1637 6186 5818 1512 6886 3420 ", wegString.toString());
+        assertEquals(95552, AStern.getWeglaenge(weg), 0.99999999999);
     }
 
     @Test
@@ -158,5 +167,6 @@ public class ASternTest {
             wegString.append(knoten.getIndex()).append(" ");
         }
         assertEquals("3 1 2 ", wegString.toString());
+        assertEquals(25603, AStern.getWeglaenge(weg), 0.99999999999);
     }
 }
