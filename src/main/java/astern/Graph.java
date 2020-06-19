@@ -4,35 +4,35 @@ import java.util.Arrays;
 
 public class Graph {
 
-    private final int ortanzahl;
-    private final boolean[][] adjazenzmatrix;
-    private final Knoten[] orte;
+    private final int numberOfNodes;
+    private final boolean[][] adjacencyMatrix;
+    private final Node[] nodes;
 
-    public Graph(final int ortanzahl) {
-        this.ortanzahl = ortanzahl;
-        this.adjazenzmatrix = new boolean[ortanzahl][ortanzahl];
-        for (boolean[] row: this.adjazenzmatrix) {
+    public Graph(final int numberOfNodes) {
+        this.numberOfNodes = numberOfNodes;
+        this.adjacencyMatrix = new boolean[numberOfNodes][numberOfNodes];
+        for (boolean[] row: this.adjacencyMatrix) {
             Arrays.fill(row, false);
         }
-        this.orte = new Knoten[ortanzahl];
-        Arrays.fill(this.orte, null);
+        this.nodes = new Node[numberOfNodes];
+        Arrays.fill(this.nodes, null);
     }
 
     /**
      * fügt einen neuen Ort hinzu, es passiert nicht, wenn am index schon ein Ort existiert
      * @param index Index vom  Ort
-     * @param x x-Koordinate des Orts
-     * @param y y-Koordinate des Orts
+     * @param xCoordinate xCoordinate-Koordinate des Orts
+     * @param yCoordinate yCoordinate-Koordinate des Orts
      * @return true, wenn Ort eingefügt wurde, false wenn nicht
      * @throws IndexOutOfBoundsException wenn Index vom Ort zu groß
      */
-    public boolean insertOrt(final int index, final int x, final int y) throws IndexOutOfBoundsException {
-        if(index >= ortanzahl) {
+    public boolean insertNode(final int index, final int xCoordinate, final int yCoordinate) throws IndexOutOfBoundsException {
+        if(index >= numberOfNodes) {
             throw new IndexOutOfBoundsException("Index out of bounds. Erstelle einen neuen Graphen mit mehr Knoten!");
         }
-        if(this.orte[index]==null) {
-            Knoten k = new Knoten(this, index, x, y);
-            this.orte[index] = k;
+        if(this.nodes[index]==null) {
+            Node k = new Node(this, index, xCoordinate, yCoordinate);
+            this.nodes[index] = k;
             return true;
         }
         return false;
@@ -40,63 +40,66 @@ public class Graph {
 
     /**
      * fügt eine neue Strasse zwischen zwei Orten ein
-     * @param indexOrt1 Index vom ersten Ort
-     * @param indexOrt2 Index vom zweiten Ort
+     * @param indexNode1 Index vom ersten Ort
+     * @param indexNode2 Index vom zweiten Ort
      * @return true, wenn Strasse eingefügt wurde, false wenn nicht
      * @throws IndexOutOfBoundsException wenn Index vom Ort zu groß
      */
-    public boolean insertStrasse(final int indexOrt1, final int indexOrt2) throws IndexOutOfBoundsException {
-        if(indexOrt1 >= ortanzahl || indexOrt2 >= ortanzahl) {
+    public boolean insertEdge(final int indexNode1, final int indexNode2) throws IndexOutOfBoundsException {
+        if(indexNode1 >= numberOfNodes || indexNode2 >= numberOfNodes) {
             throw new IndexOutOfBoundsException(
                     "Index out of bounds. Erstelle einen neuen Graphen mit mehr Knoten! Knoten gibt es nicht!"
             );
         }
-        if(this.orte[indexOrt1]!=null && this.orte[indexOrt2]!=null) {
-            this.adjazenzmatrix[indexOrt1][indexOrt2] = true;
-            this.adjazenzmatrix[indexOrt2][indexOrt1] = true;
+        if(this.nodes[indexNode1]!=null && this.nodes[indexNode2]!=null) {
+            this.adjacencyMatrix[indexNode1][indexNode2] = true;
+            this.adjacencyMatrix[indexNode2][indexNode1] = true;
             return true;
         }
         return false;
     }
 
+
+    // TODO - move to Node ??
     /**
      * gibt alle Nachbarorte eines Ortes zurück
      * @param indexOrt Index vom  Ort
      * @return Array der Nachbarorte
      * @throws IndexOutOfBoundsException wenn Index vom Ort zu groß
      */
-    public Knoten[] getNachbarorte(int indexOrt) throws IndexOutOfBoundsException {
-        if(indexOrt >= ortanzahl) {
+    public Node[] getNeighbors(int indexOrt) throws IndexOutOfBoundsException {
+        if(indexOrt >= numberOfNodes) {
             throw new IndexOutOfBoundsException("Index out of bounds. Knoten gibt es nicht!");
         }
         ArrayList<Integer> indizes = new ArrayList<>();
-        for (int i=0; i<this.adjazenzmatrix[indexOrt].length; i++) {
-            if(this.adjazenzmatrix[indexOrt][i]) {
+        for (int i = 0; i<this.adjacencyMatrix[indexOrt].length; i++) {
+            if(this.adjacencyMatrix[indexOrt][i]) {
                 indizes.append(i);
             }
         }
-        Knoten[] nachbarn = new Knoten[indizes.size()];
+        Node[] nachbarn = new Node[indizes.size()];
         for(int i=0; i<indizes.size(); i++) {
-            nachbarn[i] = this.orte[indizes.get(i)];
+            nachbarn[i] = this.nodes[indizes.get(i)];
         }
         return nachbarn;
     }
 
+    // TODO - move to node ???
     // euklidisch
-    static public double getDistanz(final Knoten knoten, final Knoten knoten2) {
-        final int x1 = knoten.getX();
-        final int x2 = knoten2.getX();
-        final int y1 = knoten.getY();
-        final int y2 = knoten2.getY();
+    static public double getDistance(final Node node, final Node node2) {
+        final int x1 = node.getxCoordinate();
+        final int x2 = node2.getxCoordinate();
+        final int y1 = node.getyCoordinate();
+        final int y2 = node2.getyCoordinate();
 
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
-    public boolean[][] getAdjazenzmatrix() {
-        return adjazenzmatrix;
+    public boolean[][] getAdjacencyMatrix() {
+        return adjacencyMatrix;
     }
 
-    public Knoten[] getOrte() {
-        return orte;
+    public Node[] getNodes() {
+        return nodes;
     }
 }

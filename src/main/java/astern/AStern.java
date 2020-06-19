@@ -7,114 +7,119 @@ import java.io.IOException;
 
 public class AStern extends ProfiledClass {
 
-    private final Graph g;
-    private final int startIndex;
-    private final int zielIndex;
+    private final Graph graph;
+    private final int startNodeIndex;
+    private final int endNodeIndex;
 
-    public AStern(final String file, final Integer startIndex, final Integer zielIndex) {
-        this.g = readFile(file);
-        this.startIndex = startIndex;
-        this.zielIndex = zielIndex;
+    public AStern(final String file, final Integer startNodeIndex, final Integer endNodeIndex) {
+        this.graph = fromFile(file);
+        this.startNodeIndex = startNodeIndex;
+        this.endNodeIndex = endNodeIndex;
     }
 
-    public Knoten[] computeShortestPath() {
-        Knoten[] alleOrte = g.getOrte();
-        final Knoten start = alleOrte[startIndex];
-        final Knoten ziel = alleOrte[zielIndex];
-        start.setKostenStartBisZuMir(0.0);
-        start.setKostenBisZielGeschaetzt(0.0);
-        start.setParent(start);
-        KnotenQueue queue = new KnotenQueue();
-        queue.insert(start);
+    public Node[] computeShortestPath() {
+        Node[] allNodes = graph.getNodes();
+        final Node startNode = allNodes[startNodeIndex];
+        final Node endNode = allNodes[endNodeIndex];
+        startNode.setDistanceFromStart(0.0);
+        startNode.updatefScore(0.0);
+        startNode.setParentNode(startNode);
+        SortedNodeQueue queue = new SortedNodeQueue();
+        queue.insert(startNode);
 
         while(queue.size()>0) {
-            Knoten minimumKostenInQueue = queue.remove();
-            if(!minimumKostenInQueue.isAbgearbeitet()) {
-                minimumKostenInQueue.setAbgearbeitet(true);
+            Node currentNode = queue.remove(); // TODO - rename ?
+            if(!currentNode.isVisited()) {
+                currentNode.setVisited(true);
 
-                if(minimumKostenInQueue.equals(ziel)) {
-                    return getPath(start, ziel);
+                if(currentNode.equals(endNode)) {
+                    return getPath(startNode, endNode);
                 }
 
-                final boolean[] istNachbar = g.getAdjazenzmatrix()[minimumKostenInQueue.getIndex()];
-                for (int i=0; i<istNachbar.length; i++) {
-                    if(istNachbar[i]) {
-                        Knoten k = alleOrte[i];
-                        if(!k.isAbgearbeitet()) {
-                            double predictionBisZiel = Graph.getDistanz(k, ziel);
-                            double distanzNachbarParent = Graph.getDistanz(k, minimumKostenInQueue);
-                            double startBisK = minimumKostenInQueue.getKostenStartBisZuMir() + distanzNachbarParent;
-                            double gesamtkosten = startBisK + predictionBisZiel;
-                            if(gesamtkosten < k.getGesamtkosten()) {
-                                k.setParent(minimumKostenInQueue);
-                                k.setKostenStartBisZuMir(startBisK);
-                                k.setKostenBisZielGeschaetzt(predictionBisZiel);
-                                queue.insert(k);
+                final boolean[] isNeighbor = graph.getAdjacencyMatrix()[currentNode.getIndex()]; // TODO - rename?? refactor ????
+                for (int i=0; i<isNeighbor.length; i++) {
+                    if(isNeighbor[i]) {
+                        Node currentNeighbor = allNodes[i];
+                        // TODO - rename variables! refactor ?? own method ????
+                        if(!currentNeighbor.isVisited()) {
+                            double estimatedDistanceToEnd = Graph.getDistance(currentNeighbor, endNode);
+                            double distanceCurrentNeighborToParent = Graph.getDistance(currentNeighbor, currentNode);
+                            double distanceFromStart = currentNode.getDistanceFromStart() + distanceCurrentNeighborToParent;
+                            double fScore = distanceFromStart + estimatedDistanceToEnd;
+                            if(fScore < currentNeighbor.getfScore()) {
+                                currentNeighbor.setParentNode(currentNode);
+                                currentNeighbor.setDistanceFromStart(distanceFromStart);
+                                currentNeighbor.updatefScore(estimatedDistanceToEnd);
+                                queue.insert(currentNeighbor);
                             }
                         }
                     }
                 }
             }
         }
-        return new Knoten[0];
+        // TODO - or return null???
+        return new Node[0];
     }
 
-    static public Knoten[] getPath(Knoten start, Knoten ziel) {
-        int length = ziel.getNumOfSuccessors();
-        Knoten[] weg = new Knoten[length];
+    // TODO - rename?
+    static public Node[] getPath(Node startNode, Node endNode) {
+        int length = endNode.getNumberOfSuccessors();
+        Node[] path = new Node[length];
         int counter = length-1;
-        while(!ziel.getParent().equals(ziel)){
-            weg[counter] = ziel;
-            ziel = ziel.getParent();
+        while(!endNode.getParentNode().equals(endNode)){
+            path[counter] = endNode;
+            endNode = endNode.getParentNode();
             counter--;
         }
-        weg[0] = start;
-        return weg;
+        path[0] = startNode;
+        return path;
     }
 
-    static public Graph readFile(final String file) {
+    static public Graph fromFile(final String file) {
         Graph graph = new Graph(10000);
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            for(String line = br.readLine(); line != null; line = br.readLine()) {
-                String[] eintrag = line.split(",");
-                if(eintrag[0].equals("O")) {
-                    graph.insertOrt(
-                            Integer.parseInt(eintrag[1]),
-                            Integer.parseInt(eintrag[2]),
-                            Integer.parseInt(eintrag[3])
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            for(String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+                String[] entry = line.split(",");
+                if(entry[0].equals("O")) {
+                    graph.insertNode(
+                            Integer.parseInt(entry[1]),
+                            Integer.parseInt(entry[2]),
+                            Integer.parseInt(entry[3])
                     );
                 }
                 else {
-                    graph.insertStrasse(
-                            Integer.parseInt(eintrag[1]),
-                            Integer.parseInt(eintrag[2])
+                    graph.insertEdge(
+                            Integer.parseInt(entry[1]),
+                            Integer.parseInt(entry[2])
                     );
                 }
             }
-            br.close();
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return graph;
     }
 
-    static public double getWeglaenge(Knoten[] weg) {
-        return weg[weg.length-1].getKostenStartBisZuMir();
+    // TODO - refactor? class Path ????
+    static public double getPathLength(Node[] weg) {
+        return weg[weg.length-1].getDistanceFromStart();
     }
 
     @Override
     public void run() {
-        Knoten[] weg = this.computeShortestPath();
-        int knotenInWeg = weg.length;
-        if(knotenInWeg>0) {
-            StringBuilder wegString = new StringBuilder();
-            for(final Knoten knoten : weg) {
-                wegString.append(knoten.getIndex()).append(" ");
+        Node[] shortestPath = this.computeShortestPath();
+        int numberOfNodesInPath = shortestPath.length;
+        if(numberOfNodesInPath>0) {
+            // TODO - class path toSTring method ??
+            StringBuilder pathString = new StringBuilder();
+            for(final Node node : shortestPath) {
+                pathString.append(node.getIndex()).append(" ");
             }
-            System.out.println("Weg gefunden der Laenge " +getWeglaenge(weg));
+            System.out.println("Weg gefunden der Laenge " + getPathLength(shortestPath));
             System.out.println();
-            System.out.println("Weg: ( " + wegString + ")");
+            System.out.println("Weg: ( " + pathString + ")");
         }
         else {
             System.out.println("Leider kein Weg gefunden!");
