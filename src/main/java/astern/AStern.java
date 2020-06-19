@@ -99,6 +99,10 @@ public class AStern extends ProfiledClass {
         return graph;
     }
 
+    static public double getWeglaenge(Knoten[] weg) {
+        return weg[weg.length-1].getKostenStartBisZuMir();
+    }
+
     @Override
     public void run() {
         Knoten[] weg = this.computeShortestPath();
@@ -108,7 +112,7 @@ public class AStern extends ProfiledClass {
             for(final Knoten knoten : weg) {
                 wegString.append(knoten.getIndex()).append(" ");
             }
-            System.out.println("Weg gefunden der Laenge " + g.getOrte()[zielIndex].getKostenStartBisZuMir());
+            System.out.println("Weg gefunden der Laenge " +getWeglaenge(weg));
             System.out.println();
             System.out.println("Weg: ( " + wegString + ")");
         }
