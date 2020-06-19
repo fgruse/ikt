@@ -2,10 +2,10 @@ package astern;
 
 public class KnotenQueue {
 
-    private final KnotenListe elements;
+    private final ArrayList<Knoten> elements;
 
     public KnotenQueue() {
-        this.elements = new KnotenListe();
+        this.elements = new ArrayList<>();
     }
 
     /**

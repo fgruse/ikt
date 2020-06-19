@@ -1,7 +1,6 @@
 package astern;
 
 import java.util.Arrays;
-import ue1.FeldListe;
 
 public class Graph {
 
@@ -70,7 +69,7 @@ public class Graph {
         if(indexOrt >= ortanzahl) {
             throw new IndexOutOfBoundsException("Index out of bounds. Knoten gibt es nicht!");
         }
-        FeldListe indizes = new FeldListe();
+        ArrayList<Integer> indizes = new ArrayList<>();
         for (int i=0; i<this.adjazenzmatrix[indexOrt].length; i++) {
             if(this.adjazenzmatrix[indexOrt][i]) {
                 indizes.append(i);
