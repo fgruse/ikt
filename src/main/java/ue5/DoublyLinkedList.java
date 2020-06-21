@@ -176,7 +176,7 @@ public class DoublyLinkedList<T> {
         if(head!=null) {
             ElementDLL<T> pointer = head.getNext();
             while(pointer.getNext()!=null) {
-                if(pointer.getData()==value) {
+                if(pointer.getData().equals(value)) {
                     contains = true;
                     break;
                 }

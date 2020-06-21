@@ -148,7 +148,7 @@ public class SinglyLinkedList<T> {
         if(size>0) {
             ElementSLL<T> pointer = head.getNext();
             for(int i=0; i<size; i++) {
-                if(pointer.getData()==value) {
+                if(pointer.getData().equals(value)) {
                     contains = true;
                     break;
                 }
