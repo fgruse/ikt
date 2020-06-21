@@ -30,36 +30,6 @@ public class SortedNodeQueue {
             if(z == -1) {
                 this.nodes.insert(size, node);
             }
-            //this.elements.insert(index, node);
-            /*int index = binarySearch(node);
-            if(z!=index) {
-                System.out.println(z + " " + index);
-            }*/
-        }
-    }
-
-    // TODO - fix ??
-    public int binarySearch(Node node) {
-        double kosten = node.getfScore();
-        int left = 0;
-        int right = this.nodes.size()-1;
-        int center = (left+right)/2;
-
-        while(left<right && !this.nodes.get(center).equals(node)){
-            if(kosten<this.nodes.get(center).getfScore()) {
-                right = center-1;
-            }
-            else {
-                left = center+1;
-            }
-            center = (left+right)/2;
-        }
-
-        if(kosten<this.nodes.get(center).getfScore()) {
-            return center;
-        }
-        else {
-            return center+1;
         }
     }
 

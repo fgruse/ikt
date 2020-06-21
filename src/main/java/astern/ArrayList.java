@@ -4,10 +4,6 @@ public class ArrayList<E> {
 
     private E[] elements;
 
-    public ArrayList(final E[] elements) {
-        this.elements = elements;
-    }
-
     @SuppressWarnings("unchecked")
     public ArrayList() {
         this.elements = (E[]) new Object[0];
