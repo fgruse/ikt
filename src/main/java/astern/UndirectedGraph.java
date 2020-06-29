@@ -92,6 +92,10 @@ public class UndirectedGraph {
         }
     }
 
+    public boolean[] getAdjacencyArrayForNode(final Node node) {
+        return this.adjacencyMatrix[node.getIndex()];
+    }
+
     /**
      * getter for graph's adjecency matrix
      * @return graph's adjecency matrix as a 2D-array

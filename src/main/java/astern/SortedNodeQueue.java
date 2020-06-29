@@ -21,7 +21,7 @@ public class SortedNodeQueue {
         }
         else {
             int z = -1;
-            final double[] fScores = aStar.getfScores();
+            final double[] fScores = aStar.getfScore();
             for(int j=0; j<size; j++) {
                 if(fScores[node.getIndex()] < fScores[this.nodes.get(j).getIndex()]) {
                     this.nodes.insert(j, node);
