@@ -12,15 +12,12 @@ public class AStar {
 
     public AStar(final UndirectedGraph graph) {
         this.graph = graph;
-        final int numberOfNodes = graph.getNumberOfNodes();
+        final int numberOfNodes = graph.getMaxNumberOfNodes();
         this.parents = new int[numberOfNodes];
-        Arrays.fill(this.parents, -1);
         this.visited = new boolean[numberOfNodes];
-        Arrays.fill(this.visited, false);
         this.fScores = new double[numberOfNodes];
-        Arrays.fill(this.fScores, Double.POSITIVE_INFINITY);
         this.distancesFromStart = new double[numberOfNodes];
-        Arrays.fill(this.distancesFromStart, Double.POSITIVE_INFINITY);
+        this.initializeStates();
     }
 
     /**
@@ -30,8 +27,7 @@ public class AStar {
      * @return Path object for shortest path between start and end node, empty Path object if none found
      */
     public Path computeShortestPath(final int startNodeIndex, final int endNodeIndex) {
-        this.resetStates();
-
+        this.initializeStates();
         final Node[] allNodes = graph.getNodes();
         final Node startNode = allNodes[startNodeIndex];
         final Node endNode = allNodes[endNodeIndex];
@@ -79,11 +75,10 @@ public class AStar {
                 }
             }
         }
-        // TODO - or return null???
-        return new Path(graph, new ArrayList<>(), 0.0);
+        return null;
     }
 
-    private void resetStates() {
+    private void initializeStates() {
         Arrays.fill(this.parents, -1);
         Arrays.fill(this.visited, false);
         Arrays.fill(this.fScores, Double.POSITIVE_INFINITY);

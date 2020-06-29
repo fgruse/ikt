@@ -1,10 +1,6 @@
 package astern;
 
-import java.util.Arrays;
-
 public class Path {
-
-    // TODO javadoc
 
     private final UndirectedGraph graph;
     private final ArrayList<Node> nodes;
@@ -14,10 +10,6 @@ public class Path {
         this.graph = graph;
         this.nodes = nodes;
         this.length = length;
-    }
-
-    public int getNumberOfNodes() {
-        return this.nodes.size();
     }
 
     public double getLength() {

@@ -10,7 +10,6 @@ public class SortedNodeQueue {
         this.aStar = aStar;
     }
 
-    // TODO - variablen umbennenen!
     /**
      * Element einfügen, Queue ist sortiert nach geringsten Gesamtkosten
      * @param node - Element, welches eingefügt wird

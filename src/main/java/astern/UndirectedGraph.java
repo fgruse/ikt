@@ -16,7 +16,7 @@ public class UndirectedGraph {
      * maximum number of nodes the graph can contain is 10000
      */
     // TODO wie anders lösen??? würde immer leer bleiben da die insert methoden private sind um immitability zu gewährleisten
-    public UndirectedGraph() {
+    protected UndirectedGraph() {
         this.adjacencyMatrix = new boolean[MAX_NUMBER_OF_NODES][MAX_NUMBER_OF_NODES];
         for (boolean[] row: this.adjacencyMatrix) {
             Arrays.fill(row, false);
@@ -112,7 +112,7 @@ public class UndirectedGraph {
      * getter for maximum number of nodes in graph
      * @return int - maximum number of nodes in graph
      */
-    public int getNumberOfNodes() {
+    public int getMaxNumberOfNodes() {
         return MAX_NUMBER_OF_NODES;
     }
 }

@@ -10,13 +10,14 @@ public class Main extends ProfiledClass {
         profiler.printResults();
     }
 
+
+    // TODO - in der main lassen oder eigene klasse für profiler?
     @Override
     public void run() {
-        UndirectedGraph g = UndirectedGraph.fromFile("src/main/java/astern/ortschaften-demo.csv");
-        AStar a = new AStar(g);
-        Path shortestPath = a.computeShortestPath(0, 1);
-        int numberOfNodesInPath = shortestPath.getNumberOfNodes();
-        if(numberOfNodesInPath>0) {
+        UndirectedGraph graph = UndirectedGraph.fromFile("src/main/java/astern/ortschaften-demo-less-edges.csv");
+        AStar aStar = new AStar(graph);
+        Path shortestPath = aStar.computeShortestPath(0, 3611);
+        if(shortestPath != null) {
             System.out.println("Nodes in Path: " + shortestPath.toString());
             System.out.println("Length: " + shortestPath.getLength());
             System.out.println();
