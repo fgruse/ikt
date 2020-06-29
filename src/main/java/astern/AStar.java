@@ -25,51 +25,45 @@ public class AStar {
      * Computes the shortest path between two nodes within the graph using the a-star-algorithm
      * @param startNodeIndex start node's index
      * @param endNodeIndex end node's index
-     * @return Path object for shortest path between start and end node, empty Path object if none found
+     * @return Path object for shortest path between start and end node, null if none found
      */
     public Path computeShortestPath(final int startNodeIndex, final int endNodeIndex) {
-        this.initializeStates();
-
         final Node[] allNodes = graph.getNodes();
-        final Node startNode = allNodes[startNodeIndex];
         final Node endNode = allNodes[endNodeIndex];
 
-        this.distanceFromStart[startNode.getIndex()] = 0.0;
-        this.fScore[startNode.getIndex()] = 0.0;
-        this.parent[startNodeIndex] = startNodeIndex;
-        queue.insert(startNode);
+        this.initializeStates();
+        this.setStatesForNode(startNodeIndex, startNodeIndex, 0.0, 0.0);
+        queue.insert(allNodes[startNodeIndex]);
 
         while(queue.size()>0) {
-            Node currentNode = queue.remove(); // TODO - rename ?
-            if(!this.visited[currentNode.getIndex()]) {
-                this.visited[currentNode.getIndex()] = true;
+            final Node currentNode = queue.remove();
+            final int currentNodeIndex = currentNode.getIndex();
 
-                if(currentNode.equals(endNode)) {
-                    // TODO refactor --> move to Path ???
-                    ArrayList<Node> path = new ArrayList<>();
-                    int pointer = endNode.getIndex();
-                    while(this.parent[pointer]!=pointer){
-                        path.prepend(allNodes[pointer]);
-                        pointer = this.parent[pointer];
-                    }
-                    path.prepend(allNodes[this.parent[pointer]]);
-                    return new Path(this.graph, path, this.distanceFromStart[endNode.getIndex()]);
+            if(currentNode.equals(endNode)) {
+                final ArrayList<Node> path = new ArrayList<>();
+                int pointer = endNodeIndex;
+                while(this.parent[pointer]!=pointer){
+                    path.prepend(allNodes[pointer]);
+                    pointer = this.parent[pointer];
                 }
+                path.prepend(allNodes[startNodeIndex]);
+                return new Path(this.graph, path, this.distanceFromStart[endNodeIndex]);
+            }
 
+            if(!this.visited[currentNodeIndex]) {
+                this.visited[currentNodeIndex] = true;
                 final boolean[] isNeighbor = graph.getAdjacencyArrayForNode(currentNode);
-                for (int i=0; i<isNeighbor.length; i++) {
-                    if(isNeighbor[i]) {
-                        Node neighborNode = allNodes[i];
+                for (int neighborNodeIndex=0; neighborNodeIndex<isNeighbor.length; neighborNodeIndex++) {
+                    if(isNeighbor[neighborNodeIndex]) {
+                        final Node neighborNode = allNodes[neighborNodeIndex];
                         if(!this.visited[neighborNode.getIndex()]) {
-                            double distanceNeighborToParent = neighborNode.getDistanceTo(currentNode);
-                            double distanceStartToParent = this.distanceFromStart[currentNode.getIndex()];
-                            double distanceStartToNeighbor = distanceStartToParent + distanceNeighborToParent;
-                            double estimatedDistanceNeighborToEnd = neighborNode.getDistanceTo(endNode);
-                            double fScore = distanceStartToNeighbor + estimatedDistanceNeighborToEnd;
+                            final double distanceStartToParent = this.distanceFromStart[currentNodeIndex];
+                            final double distanceNeighborToParent = neighborNode.getDistanceTo(currentNode);
+                            final double distanceStartToNeighbor = distanceStartToParent + distanceNeighborToParent;
+                            final double estimatedDistanceNeighborToEnd = neighborNode.getDistanceTo(endNode);
+                            final double fScore = distanceStartToNeighbor + estimatedDistanceNeighborToEnd;
                             if(fScore < this.fScore[neighborNode.getIndex()]) {
-                                this.parent[neighborNode.getIndex()] = currentNode.getIndex();
-                                this.distanceFromStart[neighborNode.getIndex()] = distanceStartToNeighbor;
-                                this.fScore[neighborNode.getIndex()] = estimatedDistanceNeighborToEnd + distanceStartToNeighbor;
+                                this.setStatesForNode(neighborNodeIndex, currentNodeIndex, distanceStartToNeighbor, fScore);
                                 queue.insert(neighborNode);
                             }
                         }
@@ -86,6 +80,13 @@ public class AStar {
         Arrays.fill(this.fScore, Double.POSITIVE_INFINITY);
         Arrays.fill(this.distanceFromStart, Double.POSITIVE_INFINITY);
         this.queue = new SortedNodeQueue(this);
+    }
+
+    private void setStatesForNode(final int nodeIndex, final int parentNodeIndex,
+            final double distanceStartToNeighbor, final double fScore) {
+        this.parent[nodeIndex] = parentNodeIndex;
+        this.distanceFromStart[nodeIndex] = distanceStartToNeighbor;
+        this.fScore[nodeIndex] = fScore;
     }
 
     public double[] getfScore() {
