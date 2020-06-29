@@ -1,5 +1,7 @@
 package astern;
 
+import java.util.Arrays;
+
 public class ArrayList<E> {
 
     private E[] elements;
@@ -101,10 +103,15 @@ public class ArrayList<E> {
     }
 
     /**
-     * ruft die Länge der Liste ab (Hilfsmethode)
+     * ruft die Länge der Liste ab
      * @return - Länge der Liste
      */
     public int size() {
         return this.elements.length;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(elements);
     }
 }

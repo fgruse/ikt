@@ -3,9 +3,11 @@ package astern;
 public class SortedNodeQueue {
 
     private final ArrayList<Node> nodes;
+    private final AStar aStar;
 
-    public SortedNodeQueue() {
+    public SortedNodeQueue(final AStar aStar) {
         this.nodes = new ArrayList<>();
+        this.aStar = aStar;
     }
 
     // TODO - variablen umbennenen!
@@ -20,8 +22,9 @@ public class SortedNodeQueue {
         }
         else {
             int z = -1;
+            final double[] fScores = aStar.getfScores();
             for(int j=0; j<size; j++) {
-                if(node.getfScore() < this.nodes.get(j).getfScore()) {
+                if(fScores[node.getIndex()] < fScores[this.nodes.get(j).getIndex()]) {
                     this.nodes.insert(j, node);
                     z = j;
                     break;

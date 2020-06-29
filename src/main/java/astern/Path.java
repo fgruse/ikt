@@ -4,42 +4,28 @@ import java.util.Arrays;
 
 public class Path {
 
-    private final UndirectedGraph graph;
-    private final Node[] nodes;
+    // TODO javadoc
 
-    public Path(final UndirectedGraph graph, final Node[] nodes) {
+    private final UndirectedGraph graph;
+    private final ArrayList<Node> nodes;
+    private final double length;
+
+    public Path(final UndirectedGraph graph, final ArrayList<Node> nodes, final double length) {
         this.graph = graph;
         this.nodes = nodes;
-    }
-
-    public double getPathLength() {
-        if(this.getNumberOfNodes()>0) {
-            return this.nodes[nodes.length-1].getDistanceFromStart();
-        }
-        else {
-            return 0.0;
-        }
+        this.length = length;
     }
 
     public int getNumberOfNodes() {
-        return nodes.length;
+        return this.nodes.size();
     }
 
-    public static Path fromNodeSuccessors(Node endNode) {
-        int length = endNode.getNumberOfSuccessors();
-        Node[] path = new Node[length];
-        int counter = length-1;
-        while(!endNode.getParentNode().equals(endNode)){
-            path[counter] = endNode;
-            endNode = endNode.getParentNode();
-            counter--;
-        }
-        path[0] = endNode.getParentNode();
-        return new Path(endNode.getGraph(), path);
+    public double getLength() {
+        return this.length;
     }
 
     @Override
     public String toString() {
-        return "Nodes in path: " + Arrays.toString(nodes);
+        return nodes.toString();
     }
 }
