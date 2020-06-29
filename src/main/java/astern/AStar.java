@@ -89,7 +89,7 @@ public class AStar {
         this.fScore[nodeIndex] = fScore;
     }
 
-    public double[] getfScore() {
+    public double[] getFScore() {
         return fScore;
     }
 }

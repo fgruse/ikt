@@ -11,38 +11,37 @@ public class SortedNodeQueue {
     }
 
     /**
-     * Element einfügen, Queue ist sortiert nach geringsten Gesamtkosten
-     * @param node - Element, welches eingefügt wird
+     * Knoten einfügen, Queue ist sortiert nach geringstem fScore
+     * @param node - Knoten, welcher eingefügt wird
      */
     public void insert(Node node) {
-        final int size = this.nodes.size();
-        if(size==0) {
+        if(this.size()==0) {
             this.nodes.prepend(node);
         }
         else {
-            int z = -1;
-            final double[] fScores = aStar.getfScore();
-            for(int j=0; j<size; j++) {
-                if(fScores[node.getIndex()] < fScores[this.nodes.get(j).getIndex()]) {
-                    this.nodes.insert(j, node);
-                    z = j;
+            final double[] fScores = aStar.getFScore();
+            boolean isInserted = false;
+            for(int queueIndex=0; queueIndex<this.size(); queueIndex++) {
+                if(fScores[node.getIndex()] < fScores[this.nodes.get(queueIndex).getIndex()]) {
+                    this.nodes.insert(queueIndex, node);
+                    isInserted = true;
                     break;
                 }
             }
-            if(z == -1) {
-                this.nodes.insert(size, node);
+            if(!isInserted) {
+                this.nodes.insert(this.size(), node);
             }
         }
     }
 
     /**
-     * Entnimmt das erste Element der Queue und entfernt es aus ihr
+     * Entnimmt den ersten Knoten der Queue und entfernt es aus ihr
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      * @return Knoten an erster Stelle der Queue
      */
     public Node remove() throws IndexOutOfBoundsException {
         if(this.nodes.size()==0) {
-            throw new IndexOutOfBoundsException("Die Queue ist leer.");
+            throw new IndexOutOfBoundsException("Can't remove node from empty queue.");
         }
         else {
             Node first = this.nodes.get(0);
@@ -52,8 +51,8 @@ public class SortedNodeQueue {
     }
 
     /**
-     * ruft die Länge der Liste ab (Hilfsmethode)
-     * @return - Länge der Liste
+     * ruft die Anzahl der Elemente in der Queue ab
+     * @return - Länge der Queue
      */
     public int size() {
         return this.nodes.size();

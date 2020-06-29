@@ -13,12 +13,12 @@ public class Node {
     }
 
     // euklidische distanz/ satz des pythagoras
-    // TODO - richtiger ort dafür? oder in andere klasse?
+    // TODO - richtiger ort dafür? oder in andere klasse? ASTAR? GRAPH? feature envy?
     public double getDistanceTo(final Node node) {
-        final int x1 = this.getxCoordinate();
-        final int x2 = node.getxCoordinate();
-        final int y1 = this.getyCoordinate();
-        final int y2 = node.getyCoordinate();
+        final int x1 = this.getXCoordinate();
+        final int x2 = node.getXCoordinate();
+        final int y1 = this.getYCoordinate();
+        final int y2 = node.getYCoordinate();
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
@@ -26,11 +26,11 @@ public class Node {
         return index;
     }
 
-    public int getxCoordinate() {
+    public int getXCoordinate() {
         return xCoordinate;
     }
 
-    public int getyCoordinate() {
+    public int getYCoordinate() {
         return yCoordinate;
     }
 
