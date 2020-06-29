@@ -14,10 +14,10 @@ public class Node {
 
     // euklidische distanz/ satz des pythagoras
     // TODO - richtiger ort dafür? oder in andere klasse?
-    static public double getDistanceBetween(final Node node, final Node node2) {
-        final int x1 = node.getxCoordinate();
+    static public double getDistanceBetween(final Node node1, final Node node2) {
+        final int x1 = node1.getxCoordinate();
         final int x2 = node2.getxCoordinate();
-        final int y1 = node.getyCoordinate();
+        final int y1 = node1.getyCoordinate();
         final int y2 = node2.getyCoordinate();
         return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
