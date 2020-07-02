@@ -7,6 +7,12 @@ public class AStar {
     private final UndirectedGraph graph;
     private final int[] parent;
     private final boolean[] visited;
+    // TODO 8 - variablen umbenennen? entweder fscore, gscore, hscore oder fscore in etwas leichter verständliches
+    /*
+    gScore - the cost of the cheapest path from start to n currently known == distanceFromStart
+    fScore - represents our current best guess == fScore
+    hScore - estimates the cost to reach goal from node n == estimatedDistanceNeighborToEnd
+    */
     private final double[] fScore;
     private final double[] distanceFromStart;
     private SortedNodeQueue queue;

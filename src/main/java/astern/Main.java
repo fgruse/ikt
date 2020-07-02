@@ -10,8 +10,7 @@ public class Main extends ProfiledClass {
         profiler.printResults();
     }
 
-
-    // TODO - in der main lassen oder eigene klasse für profiler?
+    // TODO 1 - in der main lassen oder eigene klasse für profiler?
     @Override
     public void run() {
         final UndirectedGraph graph = UndirectedGraph.fromFile("src/main/java/astern/ortschaften-demo-less-edges.csv");

@@ -4,7 +4,9 @@ import java.util.Objects;
 
 public class Path {
 
+    // TODO 4 - muss path den graph kennen? wird nie benutzt.. und wenn ja, sollte node dann auch graph kennen wegen einheitlichkeit?
     private final UndirectedGraph graph;
+    // TODO 5 - hier lieber array benutzen? feste länge und reihenfolge
     private final ArrayList<Node> nodes;
     private final double length;
 
@@ -18,6 +20,7 @@ public class Path {
         return this.length;
     }
 
+    // TODO 6 - getNodes & equals entfernen? werden nie genutzt, stellen aber grundfunktionalitäten da
     public ArrayList<Node> getNodes() {
         return nodes;
     }

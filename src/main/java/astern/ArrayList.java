@@ -2,6 +2,8 @@ package astern;
 
 import java.util.Arrays;
 
+// TODO 2 - Generics hier überhaupt sinnvoll? Wird momentan nur für Node benutzt
+
 public class ArrayList<E> {
 
     private E[] elements;

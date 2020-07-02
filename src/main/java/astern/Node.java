@@ -2,6 +2,7 @@ package astern;
 
 public class Node {
 
+    // TODO 7 - muss node graph kennen? eigentlich nicht, keine funktionalität, aber sollte einheitlich mit path sein? (siehe TODO 4)
     private final int index;
     private final int xCoordinate;
     private final int yCoordinate;
@@ -12,8 +13,8 @@ public class Node {
         this.yCoordinate = yCoordinate;
     }
 
-    // euklidische distanz/ satz des pythagoras
-    // TODO - richtiger ort dafür? oder in andere klasse? ASTAR? GRAPH? feature envy?
+    // berechnung mit euklidischer distanz
+    // TODO 3 - richtiger ort oder in andere klasse verschieben (ASTAR oder GRAPH), so lassen oder statisch?
     public double getDistanceTo(final Node node) {
         final int x1 = this.getXCoordinate();
         final int x2 = node.getXCoordinate();
