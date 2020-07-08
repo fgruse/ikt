@@ -1,14 +1,12 @@
 package astern;
 
-// TODO 9 - umebennen oder name so gut? eigentlich spezifisch für den algorithmus? AStarQueue??
-public class SortedNodeQueue {
+public class AStarNodeQueue {
 
-    private final ArrayList<Node> nodes;
-    // TODO 10 - queue muss astar kennen um auf die fscores zuzugreifen.. sinnvoll? besserer weg das zu lösen?
+    private final NodeList nodes;
     private final AStar aStar;
 
-    public SortedNodeQueue(final AStar aStar) {
-        this.nodes = new ArrayList<>();
+    public AStarNodeQueue(final AStar aStar) {
+        this.nodes = new NodeList();
         this.aStar = aStar;
     }
 
@@ -23,6 +21,7 @@ public class SortedNodeQueue {
         else {
             final double[] fScores = aStar.getFScore();
             boolean isInserted = false;
+            // TODO binary search
             for(int queueIndex=0; queueIndex<this.size(); queueIndex++) {
                 if(fScores[node.getIndex()] < fScores[this.nodes.get(queueIndex).getIndex()]) {
                     this.nodes.insert(queueIndex, node);
@@ -42,7 +41,6 @@ public class SortedNodeQueue {
      * @return Knoten an erster Stelle der Queue
      */
     public Node remove() throws IndexOutOfBoundsException {
-        // TODO 11 - überhaupt notwendig? wenn die queue nur in astar benutzt wird, kann nie auf die leere queue zugegriffen werden
         if(this.nodes.size()==0) {
             throw new IndexOutOfBoundsException("Can't remove node from empty queue.");
         }
@@ -60,4 +58,12 @@ public class SortedNodeQueue {
     public int size() {
         return this.nodes.size();
     }
+
+    /**
+     * entfert alle elemente aus der queue
+     */
+    public void clear() {
+        this.nodes.clear();
+    }
+
 }

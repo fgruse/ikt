@@ -7,23 +7,24 @@ public class AStar {
     private final UndirectedGraph graph;
     private final int[] parent;
     private final boolean[] visited;
-    // TODO 8 - variablen umbenennen? entweder fscore, gscore, hscore oder fscore in etwas leichter verständliches
-    /*
-    gScore - the cost of the cheapest path from start to n currently known == distanceFromStart
-    fScore - represents our current best guess == fScore
-    hScore - estimates the cost to reach goal from node n == estimatedDistanceNeighborToEnd
-    */
     private final double[] fScore;
-    private final double[] distanceFromStart;
-    private SortedNodeQueue queue;
+    private final double[] gScore;
+    private final AStarNodeQueue queue;
+
+    /*
+    gScore g(n) - für knoten n, bisherige distanz vom startknoten zu n
+    hScore h(n) - für knoten n, geschätze distanz von n bis zielknoten ---> mit heuristik ermitteln, luftlinie/ euklidische distanz
+    fScore f(n) - für knoten n, g(n) + h(n), abschätzung der distanz start zu ziel mit knoten n auf dem weg im günstigsten fall
+    */
 
     public AStar(final UndirectedGraph graph) {
         this.graph = graph;
         final int numberOfNodes = graph.getMaxNumberOfNodes();
+        this.queue = new AStarNodeQueue(this);
         this.parent = new int[numberOfNodes];
         this.visited = new boolean[numberOfNodes];
         this.fScore = new double[numberOfNodes];
-        this.distanceFromStart = new double[numberOfNodes];
+        this.gScore = new double[numberOfNodes];
         this.initializeStates();
     }
 
@@ -42,7 +43,6 @@ public class AStar {
         this.initializeStates();
 
         /*
-
         Erklärung der States:
 
         1) knoten ist UNBEKANNT solange parent == -1, beide scores/ distanzen unendlich, nicht in queue
@@ -71,7 +71,7 @@ public class AStar {
 
             // falls entnommener knoten == zielknoten --> fertig, weg gefunden!
             if(currentNode.equals(endNode)) {
-                final ArrayList<Node> path = new ArrayList<>();
+                final NodeList path = new NodeList();
                 // rückwärts durchlaufen aller parents beginnend beim endknoten um den weg zu rekonstruieren
                 int pointer = endNodeIndex;
                 while(this.parent[pointer]!=pointer){
@@ -81,7 +81,7 @@ public class AStar {
                 path.prepend(allNodes[startNodeIndex]);
                 // path object wird erstellt und zurückgeben
                 // länge ist die distanceFromStart des endknoten (wurde beim ermitteln des wegs aufsummiert)
-                return new Path(this.graph, path, this.distanceFromStart[endNodeIndex]);
+                return new Path(path.getNodes(), this.gScore[endNodeIndex]);
             }
 
             // knoten die schon abgearbeitet sind (STATE VISITED) werden nicht noch einmal betrachtet! kürzester weg bereits bekannt!
@@ -98,11 +98,11 @@ public class AStar {
                         // knoten die schon VISITED sind, werden nicht erneut zur queue hinzugefügt! kürzester weg bereits bekannt!
                         if(!this.visited[neighborNode.getIndex()]) {
                             // berechnen der scores (f,g,h)
-                            final double distanceStartToParent = this.distanceFromStart[currentNodeIndex];
-                            final double distanceNeighborToParent = neighborNode.getDistanceTo(currentNode);
-                            final double distanceStartToNeighbor = distanceStartToParent + distanceNeighborToParent;
-                            final double estimatedDistanceNeighborToEnd = neighborNode.getDistanceTo(endNode);
-                            final double fScore = distanceStartToNeighbor + estimatedDistanceNeighborToEnd;
+                            final double gScoreCurrentNode = this.gScore[currentNodeIndex];
+                            final double distanceCurrentToNeighbor = neighborNode.getDistanceTo(currentNode);
+                            final double gScoreNeighborNode = gScoreCurrentNode + distanceCurrentToNeighbor;
+                            final double hScoreNeighborNode = neighborNode.getDistanceTo(endNode);
+                            final double fScoreNeighborNode = gScoreNeighborNode + hScoreNeighborNode;
                             /*
                              wenn nachbarknoten noch nicht in queue ist (UNBEKANNT), ist fScore unendlich, also ist der berechnete fScore definitiv besser
                              --> scores & parent (currentNode) werden gespeichert & nachbarknoten wird eingefügt in queue
@@ -111,8 +111,8 @@ public class AStar {
                              aber weiter vorne und dadurch wird er früher bearbeitet als der mit dem schleteren score
                              --> wenn er dann noch einmal aus der queue genommen wird, wird er übersprungen (ist schon VISITED)
                             */
-                            if(fScore < this.fScore[neighborNode.getIndex()]) {
-                                this.setStatesForNode(neighborNodeIndex, currentNodeIndex, distanceStartToNeighbor, fScore);
+                            if(fScoreNeighborNode < this.fScore[neighborNode.getIndex()]) {
+                                this.setStatesForNode(neighborNodeIndex, currentNodeIndex, gScoreNeighborNode, fScoreNeighborNode);
                                 queue.insert(neighborNode);
                             }
                         }
@@ -128,14 +128,14 @@ public class AStar {
         Arrays.fill(this.parent, -1); // bisher kein nachbar, da index -1 nicht im graph existieren kann
         Arrays.fill(this.visited, false); // bisher nicht bearbeitet
         Arrays.fill(this.fScore, Double.POSITIVE_INFINITY); // bisher nicht bekannt, da score unendlich groß
-        Arrays.fill(this.distanceFromStart, Double.POSITIVE_INFINITY); // bisher nicht bekannt, da score unendlich groß
-        this.queue = new SortedNodeQueue(this); // queue wird leer initialisiert
+        Arrays.fill(this.gScore, Double.POSITIVE_INFINITY); // bisher nicht bekannt, da score unendlich groß
+        this.queue.clear(); // queue wird geleert
     }
 
     private void setStatesForNode(final int nodeIndex, final int parentNodeIndex,
             final double distanceStartToNeighbor, final double fScore) {
         this.parent[nodeIndex] = parentNodeIndex;
-        this.distanceFromStart[nodeIndex] = distanceStartToNeighbor;
+        this.gScore[nodeIndex] = distanceStartToNeighbor;
         this.fScore[nodeIndex] = fScore;
     }
 

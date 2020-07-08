@@ -1,42 +1,41 @@
 package astern;
 
-import java.util.Objects;
+import java.util.Arrays;
 
+/**
+ * Diese Klasse modelliert einen Weg bestehend aus Knoten im euklidischen Raum.
+ */
 public class Path {
 
-    // TODO 4 - muss path den graph kennen? wird nie benutzt.. und wenn ja, sollte node dann auch graph kennen wegen einheitlichkeit?
-    private final UndirectedGraph graph;
-    // TODO 5 - hier lieber array benutzen? feste länge und reihenfolge
-    private final ArrayList<Node> nodes;
+    /** Sortiertes Array, welches die Knoten enthält, die den Weg bilden */
+    private final Node[] nodes;
+    /** Länge des Wegs */
     private final double length;
 
-    public Path(final UndirectedGraph graph, final ArrayList<Node> nodes, final double length) {
-        this.graph = graph;
+    /**
+     * Konstruktor der Klasse, spezifiziert die Knoten des Wegen und dessen Länge
+     * @param nodes Sortiertes Array, welches die Knoten enthält, die den Weg bilden
+     * @param length Länge des Wegs
+     */
+    public Path(final Node[] nodes, final double length) {
         this.nodes = nodes;
         this.length = length;
     }
 
+    /**
+     * Gibt Länge des Wegs zurück
+     * @return Länge des Wegs
+     */
     public double getLength() {
         return this.length;
     }
 
-    // TODO 6 - getNodes & equals entfernen? werden nie genutzt, stellen aber grundfunktionalitäten da
-    public ArrayList<Node> getNodes() {
-        return nodes;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Path path = (Path) o;
-        return Double.compare(path.length, length) == 0 &&
-                Objects.equals(graph, path.graph) &&
-                Objects.equals(nodes, path.nodes);
-    }
-
+    /**
+     * Gibt eine String-Repräsentation der Knoten im Weg zurück
+     * @return String-Repräsentation der Knoten im Weg zurück
+     */
     @Override
     public String toString() {
-        return nodes.toString();
+        return Arrays.toString(nodes);
     }
 }

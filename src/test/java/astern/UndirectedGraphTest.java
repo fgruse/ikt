@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class UndirectedGraphTest {
-
+/*
     @Test
     public void testConstructor() {
         UndirectedGraph graph = new UndirectedGraph();
@@ -19,7 +19,7 @@ public class UndirectedGraphTest {
         assertEquals(10000, adjacencyMatrix.length);
         assertEquals(10000, adjacencyMatrix[0].length);
         assertFalse(adjacencyMatrix[0][1]);
-    }
+    }*/
 
     @Test
     public void testGraphFromFile() {
