@@ -17,8 +17,8 @@ public class NodeList {
     public void prepend(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
         newArray[0] = node;
-        for(int i=1; i<newArray.length;i++) {
-             newArray[i] = this.nodes[i-1];
+        for(int nodeIndex=1; nodeIndex<newArray.length;nodeIndex++) {
+             newArray[nodeIndex] = this.nodes[nodeIndex-1];
         }
         this.nodes = newArray;
     }
@@ -30,8 +30,8 @@ public class NodeList {
     public void append(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
         newArray[this.size()] = node;
-        for(int i=0; i<newArray.length-1;i++) {
-            newArray[i] = this.nodes[i];
+        for(int nodeIndex=0; nodeIndex<newArray.length-1;nodeIndex++) {
+            newArray[nodeIndex] = this.nodes[nodeIndex];
         }
         this.nodes = newArray;
     }
@@ -56,12 +56,12 @@ public class NodeList {
             else {
                 final Node[] newArray = new Node[this.size()+1];
 
-                for(int i=0; i<index;i++) {
-                    newArray[i] = this.nodes[i];
+                for(int nodeIndex=0; nodeIndex<index;nodeIndex++) {
+                    newArray[nodeIndex] = this.nodes[nodeIndex];
                 }
                 newArray[index] = node;
-                for(int i=index+1; i<newArray.length;i++) {
-                    newArray[i] = this.nodes[i-1];
+                for(int nodeIndex=index+1; nodeIndex<newArray.length;nodeIndex++) {
+                    newArray[nodeIndex] = this.nodes[nodeIndex-1];
                 }
                 this.nodes = newArray;
             }
@@ -95,21 +95,21 @@ public class NodeList {
         else {
             final Node[] newArray = new Node[this.size()-1];
             if(index==0) {
-                for(int i=1; i<=newArray.length; i++) {
-                    newArray[i-1] = this.nodes[i];
+                for(int nodeIndex=1; nodeIndex<=newArray.length; nodeIndex++) {
+                    newArray[nodeIndex-1] = this.nodes[nodeIndex];
                 }
             }
             else if(index==this.size()-1) {
-                for(int i=0; i<newArray.length;i++) {
-                    newArray[i] = this.nodes[i];
+                for(int nodeIndex=0; nodeIndex<newArray.length;nodeIndex++) {
+                    newArray[nodeIndex] = this.nodes[nodeIndex];
                 }
             }
             else {
-                for(int i=0; i<index;i++) {
-                    newArray[i] = this.nodes[i];
+                for(int nodeIndex=0; nodeIndex<index;nodeIndex++) {
+                    newArray[nodeIndex] = this.nodes[nodeIndex];
                 }
-                for(int i=index+1; i<=newArray.length;i++) {
-                    newArray[i-1] = this.nodes[i];
+                for(int nodeIndex=index+1; nodeIndex<=newArray.length;nodeIndex++) {
+                    newArray[nodeIndex-1] = this.nodes[nodeIndex];
                 }
             }
             this.nodes = newArray;

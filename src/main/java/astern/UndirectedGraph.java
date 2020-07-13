@@ -19,8 +19,8 @@ public class UndirectedGraph {
         this.nodes = new Node[MAX_NUMBER_OF_NODES];
         this.adjacencyMatrix = new boolean[MAX_NUMBER_OF_NODES][MAX_NUMBER_OF_NODES];
         for (boolean[] row: this.adjacencyMatrix) {
-            for(int j=0; j<row.length; j++) {
-                row[j] = false;
+            for(int nodeIndex=0; nodeIndex<row.length; nodeIndex++) {
+                row[nodeIndex] = false;
             }
         }
     }

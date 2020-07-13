@@ -30,6 +30,7 @@ public class AStar {
         final Node[] allNodes = graph.getNodes();
         final Node endNode = allNodes[endNodeIndex];
         this.initializeStates();
+        this.setStatesForNode(startNodeIndex, startNodeIndex, 0.0, 0.0);
         queue.insert(allNodes[startNodeIndex]);
 
         while(queue.size()>0) {
@@ -72,11 +73,11 @@ public class AStar {
     }
 
     private void initializeStates() {
-        for(int i=0; i<graph.getMaxNumberOfNodes(); i++) {
-            this.parent[i] = -1;
-            this.visited[i] = false;
-            this.fScore[i] = Double.POSITIVE_INFINITY;
-            this.gScore[i] = Double.POSITIVE_INFINITY;
+        for(int nodeIndex=0; nodeIndex<graph.getMaxNumberOfNodes(); nodeIndex++) {
+            this.parent[nodeIndex] = -1;
+            this.visited[nodeIndex] = false;
+            this.fScore[nodeIndex] = Double.POSITIVE_INFINITY;
+            this.gScore[nodeIndex] = Double.POSITIVE_INFINITY;
         }
         this.queue.clear();
     }
