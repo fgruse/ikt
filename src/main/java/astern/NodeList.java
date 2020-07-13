@@ -17,7 +17,9 @@ public class NodeList {
     public void prepend(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
         newArray[0] = node;
-        System.arraycopy(this.nodes, 0, newArray, 1, this.nodes.length);
+        for(int i=1; i<newArray.length;i++) {
+             newArray[i] = this.nodes[i-1];
+        }
         this.nodes = newArray;
     }
 
@@ -28,7 +30,9 @@ public class NodeList {
     public void append(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
         newArray[this.size()] = node;
-        System.arraycopy(this.nodes, 0, newArray, 0, this.nodes.length);
+        for(int i=0; i<newArray.length-1;i++) {
+            newArray[i] = this.nodes[i];
+        }
         this.nodes = newArray;
     }
 
@@ -43,11 +47,24 @@ public class NodeList {
             throw new IndexOutOfBoundsException("There is no node at index " + index + ".");
         }
         else {
-            final Node[] newArray = new Node[this.size()+1];
-            newArray[index] = node;
-            System.arraycopy(this.nodes, 0, newArray, 0, index);
-            System.arraycopy(this.nodes, index, newArray, index+1, this.nodes.length-index);
-            this.nodes = newArray;
+            if(index==0) {
+                this.prepend(node);
+            }
+            else if(index==this.size()) {
+                this.append(node);
+            }
+            else {
+                final Node[] newArray = new Node[this.size()+1];
+
+                for(int i=0; i<index;i++) {
+                    newArray[i] = this.nodes[i];
+                }
+                newArray[index] = node;
+                for(int i=index+1; i<newArray.length;i++) {
+                    newArray[i] = this.nodes[i-1];
+                }
+                this.nodes = newArray;
+            }
         }
     }
 
@@ -59,7 +76,7 @@ public class NodeList {
      */
     public Node get(final int index) throws IndexOutOfBoundsException {
         if(index>=this.size() || index<0) {
-            throw new IndexOutOfBoundsException("here is no node at index " + index + ".");
+            throw new IndexOutOfBoundsException("There is no node at index " + index + ".");
         }
         else {
             return this.nodes[index];
@@ -77,8 +94,24 @@ public class NodeList {
         }
         else {
             final Node[] newArray = new Node[this.size()-1];
-            System.arraycopy(this.nodes, 0, newArray, 0, index);
-            System.arraycopy(this.nodes, index+1, newArray, index, this.nodes.length-index-1);
+            if(index==0) {
+                for(int i=1; i<=newArray.length; i++) {
+                    newArray[i-1] = this.nodes[i];
+                }
+            }
+            else if(index==this.size()-1) {
+                for(int i=0; i<newArray.length;i++) {
+                    newArray[i] = this.nodes[i];
+                }
+            }
+            else {
+                for(int i=0; i<index;i++) {
+                    newArray[i] = this.nodes[i];
+                }
+                for(int i=index+1; i<=newArray.length;i++) {
+                    newArray[i-1] = this.nodes[i];
+                }
+            }
             this.nodes = newArray;
         }
     }
@@ -91,7 +124,7 @@ public class NodeList {
     public boolean contains(final Node node){
 
         for (final Node nodeInList: this.nodes) {
-            if(nodeInList==node) {
+            if(nodeInList.equals(node)) {
                 return true;
             }
         }

@@ -3,7 +3,6 @@ package astern;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class UndirectedGraph {
 
@@ -20,7 +19,9 @@ public class UndirectedGraph {
         this.nodes = new Node[MAX_NUMBER_OF_NODES];
         this.adjacencyMatrix = new boolean[MAX_NUMBER_OF_NODES][MAX_NUMBER_OF_NODES];
         for (boolean[] row: this.adjacencyMatrix) {
-            Arrays.fill(row, false);
+            for(int j=0; j<row.length; j++) {
+                row[j] = false;
+            }
         }
     }
 
@@ -67,8 +68,8 @@ public class UndirectedGraph {
         if(index >= MAX_NUMBER_OF_NODES) {
             throw new IndexOutOfBoundsException("Index out of bounds: This graph can't contain this many nodes!");
         }
-        Node k = new Node(index, xCoordinate, yCoordinate);
-        this.nodes[index] = k;
+        Node node = new Node(index, xCoordinate, yCoordinate);
+        this.nodes[index] = node;
     }
 
     /**
