@@ -21,7 +21,6 @@ public class AStarNodeQueue {
         else {
             final double[] fScores = aStar.getFScore();
             boolean isInserted = false;
-            // TODO binary search
             for(int queueIndex=0; queueIndex<this.size(); queueIndex++) {
                 if(fScores[node.getIndex()] < fScores[this.nodes.get(queueIndex).getIndex()]) {
                     this.nodes.insert(queueIndex, node);
