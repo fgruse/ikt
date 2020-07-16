@@ -34,11 +34,11 @@ Daraus ergibt sich der h-score (Heuristisch berechnete/geschätzte Distanz), wel
 
 **Referenz Impelmentierung**
 
-![LaufzeitReferenz](laufzeitreferenz.png)
+![LaufzeitReferenz](beispiel_referenz.png)
 
 **Unser Code**
 
-![LaufzeitCode](laufzeitcode.png)
+![LaufzeitCode](beispiel_code.png)
 
 In der Referenzimplementierung findet das Einlesen des Graphen aus der Datei in der Main statt und zählt somit zur object construction time, diese muss zur execution time dazu addiert werden. In unserem Code hingegen findet keinerlei Objekterzeugung in der Main statt, weshalb die Verteilung der Zeiten so unterschiedlich ist. Trotzdem müssen auch hier object construction time und execution time addiert werden.
 Im Vergleich sieht man deutlich, dass unsere Implementierung fast doppelt so schnell ist (1.249ms vs. 695ms), außerdem verbraucht sie nur etwa 1/8 an Speicherplatz.
@@ -47,10 +47,10 @@ Im Vergleich sieht man deutlich, dass unsere Implementierung fast doppelt so sch
 
 **Referenz Impelmentierung**
 
-![DurchschnittReferenz](durchschnittreferenz.png)
+![DurchschnittReferenz](durchschnitt_referenz.png)
 
 **Unser Code**
 
-![DurchschnittCode](durchschnittcode.png)
+![DurchschnittCode](durchschnitt_code.png)
 
 Wir haben Implementierungen 5x für den gleichen Weg von 0 bis 1 laufen lassen, die Werte erfasst und den Durchschnitt berechnet. Auch hier sieht man, dass unsere Implementierung im Durchschnitt deutlich schneller ist als die Referenzimplementierung und nur einen Bruchteil des Speicherplatzes verbraucht.
