@@ -20,8 +20,13 @@ Als Ergebnis soll unsere Anwendung die Länge des kürzesten Weges und den Weg s
 
 ![Klassendiagramm](klassendiagramm.png)
 
-In unserer Implementierung sind Graph und Algorithmus voneinander getrennt. Die unterrichtete Graph Klasse enthält Knoten (Node), welche jeweils für die Ortschaften stehen. Jeder Knoten hat einen einzigartigen Identifier, der dafür sorgt, dass es keine doppelten Knoten gibt, und einen x und y Wert welche bestimmen, wo sich der Knoten befindet. 
+In unserer Implementierung sind Graph und Algorithmus voneinander getrennt. Die **UndirectedGraph** Klasse enthält Knoten (Node), welche jeweils für die Ortschaften stehen. Jeder Knoten hat einen einzigartigen Identifier, der dafür sorgt, dass es keine doppelten Knoten gibt, und einen x und y Wert welche bestimmen, wo sich der Knoten befindet. 
 Diese Knoten sind verbunden durch Kanten, welche die Straßen zwischen den Knoten bzw. Ortschaften bilden, sie werden als Adjazenzmatrix dargestellt.
+
+**NodeList** enthält ein Array an Knoten, es handelt sich bei dieser Klass um eine eigene Impelmentierung einer nicht generischen ArrayList. Diese Datenstruktur haben wir gewählt, da dort schnelle Zugriffe sind und die Länge flexibel ist. 
+Das AStar Objekt wird mit dem Graphen erzeugt, darauf kann kann der kürzeste Weg berechnet und als Path Objekt zurück gibt. Auf dem gleichen AStar Objekt können meherer verschiedene Wege berechnet werden, ohne das Objekt neu erstellen zu müssen.
+**AStar** beinhaltet die **AStarNodeQueue**, in dieser werden die Knoten nach ihrem fScore sortiert in die Queue eingefügt.  Der Grund für die Wahl der Datenstruktur hier war, dass wir immer nur auf das erste Element zugreifen und dieses sortiert einfügen wollen. Die NodeList, die dem Ganzen zugrunde liegt, ermöglicht außerdem eine flexible Länge.
+In der **Path** Klasse werden die Knoten mit der Länge des Weges in einem Pfad gespeichert.
 
 ## 3. Heuristik
 
