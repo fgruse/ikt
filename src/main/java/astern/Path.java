@@ -3,7 +3,7 @@ package astern;
 import java.util.Arrays;
 
 /**
- * Diese Klasse modelliert einen Weg bestehend aus Knoten im euklidischen Raum.
+ * Diese Klasse modelliert einen Weg bestehend aus Knoten eines Graphen und speichert diese und die Länge des Weges.
  */
 public class Path {
 
