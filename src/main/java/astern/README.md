@@ -34,7 +34,7 @@ Daraus ergibt sich der h-score (Heuristisch berechnete/geschätzte Distanz), wel
 
 ### 4.1 Am Beispiel
 
-**Referenz Impelmentierung**
+**Referenzimplementierung**
 
 ![LaufzeitReferenz](beispiel_referenz.png)
 
@@ -47,7 +47,7 @@ Im Vergleich sieht man deutlich, dass unsere Implementierung fast doppelt so sch
 
 ### 4.2 Im Durchschnitt
 
-**Referenz Impelmentierung**
+**Referenzimplementierung**
 
 ![DurchschnittReferenz](durchschnitt_referenz.png)
 
