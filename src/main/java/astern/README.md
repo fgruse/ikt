@@ -6,38 +6,70 @@ Dieses Projekt ist im Rahmen der Lehrveranstaltung "IKT" an der HTW Berlin im SS
 
 ## 1. Aufgabenstellung
 
-In einem Land „Quadratien“ existieren auf einer Fläche von 100.000 x 100.000km genau 10.000 Ortschaften.
-Wir sollen mit Hilfe des A*-Algorithmus den kürzesten Weg zwischen zwei Ortschaften berechnen. Dabei ist zu beachten, dass es ein ungerichteter Graph sein muss. 
-Unser Programm soll dabei 3 Argumente akzeptieren:
+In einem Land „Quadratien“ existieren auf einer Fläche von 100.000 x 100.000 km genau 10.000 Ortschaften. 
+Diese Orte sind mit Straßen verbunden, welche in beide Richtungen befahren werden können. 
+Die Orte und Straßen lassen sich deshalb als ungerichteter Graph modellieren.
+Wir sollten nun mit Hilfe des A*-Algorithmus den kürzesten Weg zwischen zwei Ortschaften berechnen. 
+Unser Programm sollte dabei drei Argumente akzeptieren:
 
-	 1. Die Eingabedatei mit dem Verzeichnis der Ortschaften
-	 2. Der Index der Start-Ortschaft
-	 3. Der Index der Ziel-Ortschaft
+	 1. Eingabedatei mit dem Verzeichnis der Ortschaften und Straßen
+	 2. Index der Start-Ortschaft
+	 3. Index der Ziel-Ortschaft
 	
-Als Ergebnis soll unsere Anwendung die Länge des kürzesten Weges und den Weg selbst ausgeben, außerdem das Ergebnis des Profilers anzeigen.
+Als Ergebnis sollte unsere Anwendung die Länge des kürzesten Weges und den Weg selbst ausgeben. 
+Außerdem muss das Ergebnis des Profilers angezeigt werden.
 
 ## 2. Allgemeiner Aufbau
 
 ![Klassendiagramm](klassendiagramm.png)
 
-In unserer Implementierung sind Graph und Algorithmus voneinander getrennt. Die **UndirectedGraph** Klasse enthält Knoten (Node), welche jeweils für die Ortschaften stehen. Jeder Knoten hat einen einzigartigen Identifier, der dafür sorgt, dass es keine doppelten Knoten gibt, und einen x und y Wert welche bestimmen, wo sich der Knoten befindet. 
-Diese Knoten sind verbunden durch Kanten, welche die Straßen zwischen den Knoten bzw. Ortschaften bilden, sie werden als Adjazenzmatrix dargestellt.
+In unserer Implementierung ist der Graph vom Algorithmus getrennt, d.h. dass ein Graph auch ohne den Algorithmus existieren kann, nicht aber umgekehrt. 
 
-**NodeList** enthält ein Array an Knoten, es handelt sich bei dieser Klass um eine eigene Impelmentierung einer nicht generischen ArrayList. Diese Datenstruktur haben wir gewählt, da dort schnelle Zugriffe sind und die Länge flexibel ist. 
-Das AStar Objekt wird mit dem Graphen erzeugt, darauf kann kann der kürzeste Weg berechnet und als Path Objekt zurück gibt. Auf dem gleichen AStar Objekt können meherer verschiedene Wege berechnet werden, ohne das Objekt neu erstellen zu müssen.
-**AStar** beinhaltet die **AStarNodeQueue**, in dieser werden die Knoten nach ihrem fScore sortiert in die Queue eingefügt.  Der Grund für die Wahl der Datenstruktur hier war, dass wir immer nur auf das erste Element zugreifen und dieses sortiert einfügen wollen. Die NodeList, die dem Ganzen zugrunde liegt, ermöglicht außerdem eine flexible Länge.
-In der **Path** Klasse werden die Knoten mit der Länge des Weges in einem Pfad gespeichert.
+Die **UndirectedGraph** Klasse modelliert den Graphen. Sie enthält Knoten (**Node**), welche jeweils für die Ortschaften stehen. 
+Jeder Knoten hat einen einzigartigen Index, der dafür sorgt, dass man ihn eindeutig identifizieren kann und es somit keine doppelten Knoten gibt.
+Außerdem hat jeder Knoten x- und y-Wert, welche bestimmen, wo sich der Knoten befindet. Diese Knoten sind verbunden durch Kanten, welche die Straßen zwischen 
+den Knoten bzw. Ortschaften bilden. Sie werden als Adjazenzmatrix dargestellt.
+
+Bei der **NodeList** handelt es sich um eine eigene Implementierung einer nicht-generischen ArrayList, da diese ein Array an Knoten enthält. Diese Datenstruktur 
+haben wir gewählt, da damit schnelle Zugriffe möglich sind und die Länge flexibel ist. 
+
+Bei der Erzeugung eines **AStar**-Objekts wird diesem ein UndirectedGraph übergeben. Für diesen kann dann mit der `computeShortestPath`-Methode der kürzeste Weg 
+zwischen zwei Orten berechnet und als Path-Objekt zurückgegeben werden. Auf dem gleichen AStar-Objekt können mehrere verschiedene Wege berechnet werden, ohne 
+dass das Objekt neu erzeugt werden muss. 
+
+AStar beinhaltet außerdem ein **AStarNodeQueue**-Objekt. In diese Warteschlange werden während der Abarbeitung des Algorithmus Knoten nach ihrem f-Score 
+sortiert eingefügt. Der Grund für die Wahl dieser Datenstruktur hier war, dass wir immer nur auf den ersten Knoten zugreifen müssen und Knoten sortiert einfügen 
+wollen. Die NodeList, die dem Ganzen zugrunde liegt, ermöglicht außerdem die flexible Länge.
+
+In der Dataclass **Path** werden die Knoten eines gefundenen Weges in der richtigen Reihenfolge und zusammen mit der Länge des Weges eingespeichert.
 
 ## 3. Heuristik
 
-Wir wollen mit dem Algorithmus den kürzesten Weg finden, das heisst wir versuchen immer zu betrachten, welche Knoten am viel versprechendsten sind, also uns am schnellsten zum Ziel bringen. Würden wir in einem großen Graphen immer die richtigen Werte nehmen, dann würde das Suchen viel zu lange dauern und wäre am Ende viel zu langsam. Aus diesem Grund schätzen wir. Der Algorithmus legt jedoch nicht fest, welche Schätzfunktion zu verwenden ist. Im Prinzip kann man diese frei wählen, allerdings muss man darauf achten, dass die Schätzfunktion auch zulässig ist. 
-Dies bedeutet, dass die Schätzfunktion niemals die Distanz für eine Strecke überschätzen darf.
-Wir haben uns als Heuristik für die Luftlinie entschieden, da die Luftlinie immer der kürzeste Weg zwischen zwei Knoten ist. Hier ist zu beachten, dass unsere Schätzfunktion das gleiche ist, wie unsere Distanzfunktion, da die Straßen/Kanten zwischen den Orten in unserem Beispiel immer gerade sind, also quasi Luftlinie. 
-Daraus ergibt sich der h-score (Heuristisch berechnete/geschätzte Distanz), welcher in unserem Fall der geschätzte Weg von einem Knoten zum Zielknoten ist. Berechnet wird er mit euklidischen Distanz (geschätzte Luftlinie und Satz des Pythagoras).
+Das Ziel des A*-Algorithmus ist es, den kürzesten Weg zwischen zwei Orten zu finden. Bei der Suche werden nacheinander die Knoten
+betrachtet, die den kleinsten f-Score haben, also am vielversprechendsten sind und potenziell am schnellsten zum Ziel führen. Würde man in einem großen 
+Graphen immer all möglichen Wege berechnen, dann würde das Suchen viel zu lange dauern und wäre am Ende viel zu langsam. Aus diesem Grund wird eine Heuristik 
+verwendet. Der f-Score, welcher die Reihenfolge der Abarbeitung festlegt, besteht aus der Summe des g-Scores, dem tatsächlichen Weg zum betrachteten Knoten, und
+des h-Scores, der geschätzten Distanz zwischen diesem Knoten und dem Ziel. Dieses Schätzen ist die Heuristik und spart viel Zeit, da so nicht alle möglichen 
+Wege von einem Knoten bis zum Ziel berechnet werden müssen. 
+
+Der Algorithmus legt an sich nicht fest, welche Heuristik/ Schätzfunktion zu verwenden ist. Im Prinzip kann man diese frei wählen, allerdings muss man darauf 
+achten, dass die Schätzfunktion auch zulässig ist. Das bedeutet, dass die Schätzfunktion niemals die Distanz für eine Strecke überschätzen darf. Wir haben uns 
+als Heuristik für die Luftlinie/ Euklidische entschieden, da die Luftlinie immer der kürzeste Weg zwischen zwei Knoten ist. 
+
+Falls man bei der Implementierung mit einer sogenannten Closed List arbeitet, was wir tun, muss die Heuristik außerdem monoton bzw. konsistent sein. Das 
+bedeutet, dass der geschätzte Weg von einem Knoten K zum Zielknoten niemals größer sein darf, als der tatsächliche Weg von K zu einem Nachfolgerknoten L plus
+die geschätzte Distanz von L bis zum Zielknoten (Dreiecksungleichung). Die Euklidische Distanz erfüllt diese Bedingung ebenfalls. Im Spezialfall, dass der 
+Knoten L genau auf der Luftlinienstrecke zwischen K und Zielknoten liegt, ist die Summe vom g-Score von L und dem h-Score von L immer noch maximal gleich, 
+aber niemals größer.
+
+Wichtig zu beachten ist, dass bei uns die Schätzfunktion der Distanzfunktion entspricht, da die Straßen/ Kanten zwischen den Orten in unserem Beispiel 
+immer gerade sind, also eben auch Luftlinie. Der gleiche Code wird also für beide Usecases verwendet.
 
 ## 4. Laufzeitmessung
 
 ### 4.1 Am Beispiel
+
+Berechnung des Wegen von 0 nach 1 für einen Beispielgraph.
 
 **Referenzimplementierung**
 
@@ -47,8 +79,10 @@ Daraus ergibt sich der h-score (Heuristisch berechnete/geschätzte Distanz), wel
 
 ![LaufzeitCode](beispiel_code.png)
 
-In der Referenzimplementierung findet das Einlesen des Graphen aus der Datei in der Main statt und zählt somit zur object construction time, diese muss zur execution time dazu addiert werden. In unserem Code hingegen findet keinerlei Objekterzeugung in der Main statt, weshalb die Verteilung der Zeiten so unterschiedlich ist. Trotzdem müssen auch hier object construction time und execution time addiert werden.
-Im Vergleich sieht man deutlich, dass unsere Implementierung fast doppelt so schnell ist (1.249ms vs. 695ms), außerdem verbraucht sie nur etwa 1/8 an Speicherplatz.
+In der Referenzimplementierung findet das Einlesen des Graphen aus der Datei in der Main statt und zählt somit zur Object construction time. Diese muss zur 
+Execution time dazu addiert werden. In unserem Code hingegen findet keinerlei Objekterzeugung in der Main statt, weshalb die Verteilung der Zeiten so 
+unterschiedlich ist. Trotzdem müssen auch hier Object construction time und Execution time addiert werden. Im Vergleich sieht man deutlich, dass unsere 
+Implementierung fast doppelt so schnell ist (1.249ms vs. 695ms). Außerdem verbraucht sie nur etwa 1/8 an Speicherplatz.
 
 ### 4.2 Im Durchschnitt
 
@@ -60,4 +94,6 @@ Im Vergleich sieht man deutlich, dass unsere Implementierung fast doppelt so sch
 
 ![DurchschnittCode](durchschnitt_code.png)
 
-Wir haben Implementierungen 5x für den gleichen Weg von 0 bis 1 laufen lassen, die Werte erfasst und den Durchschnitt berechnet. Auch hier sieht man, dass unsere Implementierung im Durchschnitt deutlich schneller ist als die Referenzimplementierung und nur einen Bruchteil des Speicherplatzes verbraucht.
+Wir haben beide Implementierungen fünfmal für den Weg von 0 bis 1 auf dem gleichen Beispielgraphen laufen lassen, die Werte erfasst und den Durchschnitt 
+berechnet. Auch hier sieht man, dass unsere Implementierung im Durchschnitt deutlich schneller ist als die Referenzimplementierung und nur einen 
+Bruchteil des Speicherplatzes verbraucht.
