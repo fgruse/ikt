@@ -3,23 +3,23 @@ package astern;
 import java.util.Arrays;
 
 /**
- * Diese Klasse speichert alle Knoten.
+ * Diese Klasse ist eine nicht-generische ArrayList, welche Knoten speichern kann.
  */
 public class NodeList {
 
-    /** Sortiertes Array, welches alle Knoten enthält*/
+    /** Array, welches Knoten enthält */
     private Node[] nodes;
 
     /**
-     * Konstruktor der Klasse, spezifiziert alle Knoten
+     * Konstruktor der Klasse, erzeugt zunächst leeres Knoten-Array
      */
     public NodeList() {
         this.nodes = new Node[0];
     }
 
     /**
-     * Knoten am Anfang einfügen
-     * @param node - Knoten, welcher eingefügt wird
+     * Fügt Knoten am Anfang ein
+     * @param node Knoten, welcher eingefügt wird
      */
     public void prepend(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
@@ -31,8 +31,8 @@ public class NodeList {
     }
 
     /**
-     * Knoten am Ende einfügen
-     * @param node - Knoten, welcher eingefügt wird
+     * Fügt Knoten am Ende ein
+     * @param node Knoten, welcher eingefügt wird
      */
     public void append(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
@@ -45,8 +45,8 @@ public class NodeList {
 
     /**
      * Fügt Knoten an einer angegebenen Position ein
-     * @param node - Knoten, welcher eingefügt wird
-     * @param index - angegebene Position
+     * @param node Knoten, welcher eingefügt wird
+     * @param index angegebene Position
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())
      */
     public void insert(final int index, final Node node) throws IndexOutOfBoundsException {
@@ -76,9 +76,9 @@ public class NodeList {
     }
 
     /**
-     * Knoten an einer angegebenen Position abrufen
-     * @param index - angegebene Position
-     * @return value - abgerufener Knoten
+     * Ruft Knoten an einer angegebenen Position ab
+     * @param index angegebene Position
+     * @return abgerufener Knoten
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public Node get(final int index) throws IndexOutOfBoundsException {
@@ -91,8 +91,8 @@ public class NodeList {
     }
 
     /**
-     * Knoten an einer angegebenen Position löschen
-     * @param index - angegebene Position
+     * Löscht Knoten an einer angegebenen Position
+     * @param index angegebene Position
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
      */
     public void remove(final int index) throws IndexOutOfBoundsException {
@@ -124,12 +124,11 @@ public class NodeList {
     }
 
     /**
-     * prüft, ob dere übergebene Knoten in der Liste enthalten ist
-     * @param node - Knoten, welcher übergeben wird
-     * @return contains - true, wenn Element in Liste vorhanden ist, false wenn nicht
+     * Prüft, ob der übergebene Knoten in der Liste enthalten ist
+     * @param node Knoten, welcher übergeben wird
+     * @return true, wenn Element in Liste vorhanden ist, false wenn nicht
      */
     public boolean contains(final Node node){
-
         for (final Node nodeInList: this.nodes) {
             if(nodeInList.equals(node)) {
                 return true;
@@ -139,15 +138,15 @@ public class NodeList {
     }
 
     /**
-     * ruft die Länge der Liste ab
-     * @return - Länge der Liste
+     * Ruft die Länge der Liste ab
+     * @return Länge der Liste
      */
     public int size() {
         return this.nodes.length;
     }
 
     /**
-     * entfernt alle Knoten aus der liste
+     * Entfernt alle Knoten aus der liste
      */
     public void clear() {
         this.nodes = new Node[0];
@@ -163,8 +162,8 @@ public class NodeList {
     }
 
     /**
-     * abrufen der Knoten
-     * @return - abgerufene Knoten
+     * Gibt Array aller Knoten, die sich in der Liste befinden, zurück
+     * @return Knoten der Liste
      */
     public Node[] getNodes() {
         return nodes;
