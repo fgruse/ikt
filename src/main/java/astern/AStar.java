@@ -1,13 +1,28 @@
 package astern;
 
+/**
+ * Diese Klasse modelliert den A*-Algorithmus und stellt alle benötigten States für ihn bereit
+ */
+
 public class AStar {
 
+    /** Graph für den der Algorithmus laufen soll */
     private final UndirectedGraph graph;
+    /** Speichert die Indizes der Vorgängerknoten im Array ein  */
     private final int[] parent;
+    /** Speichert ein, ob ein Knoten schon abgearbeitet wurde oder nicht  */
     private final boolean[] visited;
+    /** Speichert berechnete Werte für f-Scores der Knoten  */
     private final double[] fScore;
+    /** Speichert berechnete Werte für g-Scores der Knoten   */
     private final double[] gScore;
+    /** Nach f-Score aufsteigend sortierte Warteschlange  */
     private final AStarNodeQueue queue;
+
+    /**
+     * Konstruktor der Klasse, welche den Graphen, für den der Algorithmus ausgeführt werden soll, spezifiziert.
+     * @param graph übergibt den Graphen, für den der Algorithmus berechnet werden soll
+     */
 
     public AStar(final UndirectedGraph graph) {
         this.graph = graph;
@@ -21,10 +36,10 @@ public class AStar {
     }
 
     /**
-     * Computes the shortest path between two nodes within the graph using the a-star-algorithm
-     * @param startNodeIndex start node's index
-     * @param endNodeIndex end node's index
-     * @return Path object for shortest path between start and end node, null if none found
+     * Berechnet den kürzesten Weg zwischen zwei Knoten in dem Graphen mit dem A*-Algorithmus
+     * @param startNodeIndex Index vom Startknoten
+     * @param endNodeIndex Index vom Endknoten
+     * @return Path-Objekt für kürzesten Path zwischen Start- und Endknoten, null wenn kein Weg gefunden wurde
      */
     public Path computeShortestPath(final int startNodeIndex, final int endNodeIndex) {
         final Node[] allNodes = graph.getNodes();
@@ -74,6 +89,10 @@ public class AStar {
         return null;
     }
 
+    /**
+     * Initialisierung, setzt alle States auf Startzustand.
+     */
+
     private void initializeStates() {
         for(int nodeIndex=0; nodeIndex<graph.getMaxNumberOfNodes(); nodeIndex++) {
             this.parent[nodeIndex] = -1;
@@ -84,6 +103,13 @@ public class AStar {
         this.queue.clear();
     }
 
+    /**
+     * Setzt States für einen Knoten
+     * @param nodeIndex Index von Knoten, für den die States aktualisiert werden sollen
+     * @param parentNodeIndex Index des neuen Vorgängerknoten
+     * @param gScore neuer g-Score
+     * @param fScore neuer f-Score
+     */
     private void setStatesForNode(final int nodeIndex, final int parentNodeIndex,
             final double gScore, final double fScore) {
         this.parent[nodeIndex] = parentNodeIndex;
@@ -91,6 +117,10 @@ public class AStar {
         this.fScore[nodeIndex] = fScore;
     }
 
+    /**
+     * Gibt f-Scores aller Knoten zurück
+     * @return f-Scores aller Knoten
+     */
     public double[] getFScore() {
         return fScore;
     }
