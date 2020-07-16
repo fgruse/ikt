@@ -9,9 +9,11 @@ Dieses Projekt ist im Rahmen der Lehrveranstaltung "IKT" an der HTW Berlin im SS
 In einem Land „Quadratien“ existieren auf einer Fläche von 100.000 x 100.000km genau 10.000 Ortschaften.
 Wir sollen mit Hilfe des A*-Algorithmus den kürzesten Weg zwischen zwei Ortschaften berechnen. Dabei ist zu beachten, dass es ein ungerichteter Graph sein muss. 
 Unser Programm soll dabei 3 Argumente akzeptieren:
-	- 1. Die Eingabedatei mit dem Verzeichnis der Ortschaften
-	- 2. Der Index der Start-Ortschaft
-	- 3. Der Index der Ziel-Ortschaft
+
+	 1. Die Eingabedatei mit dem Verzeichnis der Ortschaften
+	 2. Der Index der Start-Ortschaft
+	 3. Der Index der Ziel-Ortschaft
+	
 Als Ergebnis soll unsere Anwendung die Länge des kürzesten Weges und den Weg selbst ausgeben, außerdem das Ergebnis des Profilers anzeigen.
 
 ## 2. Allgemeiner Aufbau
