@@ -37,7 +37,7 @@ public class NodeList {
     }
 
     /**
-     * Knotne an einer angegebenen Position einfügen
+     * Fügt Knoten an einer angegebenen Position ein
      * @param node - Knoten, welcher eingefügt wird
      * @param index - angegebene Position
      * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >size())

@@ -1,18 +1,27 @@
 package astern;
 
+/**
+ * Diese Klasse modelliert eine sortierte Warteschlange, welche für die Ausführung des A-Stern-Algorithmus gebraucht wird.
+ */
 public class AStarNodeQueue {
 
+    /** Aufsteigend nach f-Score sortierte Liste von Knoten */
     private final NodeList nodes;
+    /** AStar-Algorithmus-Objekt, gewährt Zugriff auf f-Scores zum Sortieren */
     private final AStar aStar;
 
+    /**
+     * Konstruktor der Klasse, spezifiziert zugehöriges AStar-Algorithmus-Objekt
+     * @param aStar AStar-Algorithmus-Objekt, auf dessen f-Scores zugegriffen werden muss
+     */
     public AStarNodeQueue(final AStar aStar) {
         this.nodes = new NodeList();
         this.aStar = aStar;
     }
 
     /**
-     * Knoten einfügen, Queue ist sortiert nach geringstem fScore
-     * @param node - Knoten, welcher eingefügt wird
+     * Fügt einen Knoten aufsteigend nach f-Score sortiert in die Warteschlange ein
+     * @param node Knoten, welcher eingefügt wird
      */
     public void insert(Node node) {
         if(this.size()==0) {
@@ -35,9 +44,9 @@ public class AStarNodeQueue {
     }
 
     /**
-     * Entnimmt den ersten Knoten der Queue und entfernt es aus ihr
-     * @throws IndexOutOfBoundsException wenn der Index nicht vorhanden ist (<0 or >=size())
-     * @return Knoten an erster Stelle der Queue
+     * Entnimmt den ersten Knoten der Warteschlange und entfernt ihn aus ihr
+     * @throws IndexOutOfBoundsException wenn die Warteschlange leer ist (size()==0)
+     * @return Knoten, der an erster Stelle der Warteschlange stand
      */
     public Node remove() throws IndexOutOfBoundsException {
         if(this.nodes.size()==0) {
@@ -51,15 +60,15 @@ public class AStarNodeQueue {
     }
 
     /**
-     * ruft die Anzahl der Elemente in der Queue ab
-     * @return - Länge der Queue
+     * Ruft die Anzahl der Knoten, die sich in der Warteschlange befinden, ab
+     * @return Anzahl der Knoten in der Warteschlange
      */
     public int size() {
         return this.nodes.size();
     }
 
     /**
-     * entfert alle elemente aus der queue
+     * Entfert alle Knoten aus der Warteschlange
      */
     public void clear() {
         this.nodes.clear();
