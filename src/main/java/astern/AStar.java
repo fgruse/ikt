@@ -28,10 +28,12 @@ public class AStar {
      */
     public Path computeShortestPath(final int startNodeIndex, final int endNodeIndex) {
         final Node[] allNodes = graph.getNodes();
+        final Node startNode = allNodes[startNodeIndex];
         final Node endNode = allNodes[endNodeIndex];
+
         this.initializeStates();
         this.setStatesForNode(startNodeIndex, startNodeIndex, 0.0, 0.0);
-        queue.insert(allNodes[startNodeIndex]);
+        queue.insert(startNode);
 
         while(queue.size()>0) {
             final Node currentNode = queue.remove();
@@ -44,7 +46,7 @@ public class AStar {
                     path.prepend(allNodes[pointer]);
                     pointer = this.parent[pointer];
                 }
-                path.prepend(allNodes[startNodeIndex]);
+                path.prepend(startNode);
                 return new Path(path.getNodes(), this.gScore[endNodeIndex]);
             }
 
@@ -83,9 +85,9 @@ public class AStar {
     }
 
     private void setStatesForNode(final int nodeIndex, final int parentNodeIndex,
-            final double distanceStartToNeighbor, final double fScore) {
+            final double gScore, final double fScore) {
         this.parent[nodeIndex] = parentNodeIndex;
-        this.gScore[nodeIndex] = distanceStartToNeighbor;
+        this.gScore[nodeIndex] = gScore;
         this.fScore[nodeIndex] = fScore;
     }
 
