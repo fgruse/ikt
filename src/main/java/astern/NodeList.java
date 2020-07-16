@@ -2,17 +2,24 @@ package astern;
 
 import java.util.Arrays;
 
+/**
+ * Diese Klasse speichert alle Knoten.
+ */
 public class NodeList {
 
+    /** Sortiertes Array, welches alle Knoten enthält*/
     private Node[] nodes;
 
+    /**
+     * Konstruktor der Klasse, spezifiziert alle Knoten
+     */
     public NodeList() {
         this.nodes = new Node[0];
     }
 
     /**
      * Knoten am Anfang einfügen
-     * @param node - Knoten, welches eingefügt wird
+     * @param node - Knoten, welcher eingefügt wird
      */
     public void prepend(final Node node) {
         final Node[] newArray = new Node[this.size()+1];
@@ -146,11 +153,19 @@ public class NodeList {
         this.nodes = new Node[0];
     }
 
+    /**
+     * Gibt eine String-Repräsentation der Knoten in der Liste zurück
+     * @return String-Repräsentation der Knoten in der Liste zurück
+     */
     @Override
     public String toString() {
         return Arrays.toString(this.nodes);
     }
 
+    /**
+     * abrufen der Knoten
+     * @return - abgerufene Knoten
+     */
     public Node[] getNodes() {
         return nodes;
     }

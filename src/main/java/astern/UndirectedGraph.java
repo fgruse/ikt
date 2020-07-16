@@ -4,16 +4,24 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Diese Klasse modelliert den Graphen der die Knoten in einem Array beinhaltet.
+ */
+
 public class UndirectedGraph {
 
+    /** Statische Variable, welche die feste Anzahl der maximalen Knoten enthält*/
     private final static int MAX_NUMBER_OF_NODES = 10000;
+    /** zweidimensionales Array, welches Kante zwischen zwei Knoten markiert*/
     private final boolean[][] adjacencyMatrix;
+    /** Sortiertes Array, welches alle Knoten im Graphen enthält */
     private final Node[] nodes;
 
-    // einziger constructor, kann nur innrehalb der klasse aufgerufen werden in fromFile z.b.
+
     /**
-     * Class constructor, creates graph that doesn't contain any nodes or edges yet,
-     * maximum number of nodes the graph can contain is 10000
+     * Konstruktor der Klasse , kann nur innerhalb der Klasse aufgerufen werden in fromFile()
+     * erzeugt Graphen welche vorerst weder Knoten noch Kanten haben
+     * Maximale Anzahl an Knoten ist 10000
      */
     private UndirectedGraph() {
         this.nodes = new Node[MAX_NUMBER_OF_NODES];
@@ -26,8 +34,8 @@ public class UndirectedGraph {
     }
 
     /**
-     * static method that creates graph and inserts nodes and edges read from a file
-     * @param file contains all nodes and edges that should be inserted into the graph
+     * statische Methode, die ein Diagramm erstellt und Knoten und Kanten einfügt, welche aus einer Datei gelesen wurden
+     * @param file enthält alle Knoten und Kanten, die in das Diagramm eingefügt werden sollen
      */
     public static UndirectedGraph fromFile(final String file) {
         UndirectedGraph graph = new UndirectedGraph();
@@ -57,12 +65,12 @@ public class UndirectedGraph {
     }
 
     /**
-     * Inserts new node into graph at the specified index,
-     * if node at index already exists, it's overwritten
-     * @param index node's index
-     * @param xCoordinate node's x-coordinate
-     * @param yCoordinate node's y-coordinate
-     * @throws IndexOutOfBoundsException if node's index is too big for graph
+     * Fügt neuen Knoten am angegebenen Index in das Diagramm ein.
+     * Wenn der Knoten am Index bereits vorhanden ist, wird er überschrieben.
+     * @param index Knoten Index
+     * @param xCoordinate X-Koordinate des Knoten
+     * @param yCoordinate Y-Koordinate des Knoten
+     * @throws IndexOutOfBoundsException wenn der Index des Knotens für den Graphen zu groß ist
      */
     private void insertNode(final int index, final int xCoordinate, final int yCoordinate) throws IndexOutOfBoundsException {
         if(index >= MAX_NUMBER_OF_NODES) {
@@ -75,9 +83,9 @@ public class UndirectedGraph {
     /**
      * Inserts new edge into the graph between two nodes,
      * doesn't insert edge if one or both nodes don't exist
-     * @param indexNode1 first node's index
-     * @param indexNode2 second node's index
-     * @throws IndexOutOfBoundsException if node's index is too big for graph
+     * @param indexNode1 Index des ersten Knoten
+     * @param indexNode2 Index des zweiten Knoten
+     * @throws IndexOutOfBoundsException wenn der Index des Knotens für den Graphen zu groß ist
      */
     private void insertEdge(final int indexNode1, final int indexNode2) throws IndexOutOfBoundsException {
         if(indexNode1 >= MAX_NUMBER_OF_NODES || indexNode2 >= MAX_NUMBER_OF_NODES) {
@@ -94,24 +102,24 @@ public class UndirectedGraph {
     }
 
     /**
-     * getter for graph's adjecency matrix
-     * @return graph's adjecency matrix as a 2D-array
+     * getter für die Adjazenzmatrix des Graphen
+     * @return Adjazenzmatrix des Graphen als zweidimensionales Array
      */
     public boolean[][] getAdjacencyMatrix() {
         return adjacencyMatrix;
     }
 
     /**
-     * getter for graph's nodes
-     * @return an array containing the graph's nodes
+     * getter für die Knoten des Graphen
+     * @return ein Array, das die Knoten des Graphen enthält
      */
     public Node[] getNodes() {
         return nodes;
     }
 
     /**
-     * getter for maximum number of nodes in graph
-     * @return int - maximum number of nodes in graph
+     * getter für die maximale Anzahl an Knoten im Graphen
+     * @return int - maximal ANzahl an Knoten im Graphen
      */
     public int getMaxNumberOfNodes() {
         return MAX_NUMBER_OF_NODES;
