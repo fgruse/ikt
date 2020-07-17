@@ -36,6 +36,11 @@ public class Path {
      */
     @Override
     public String toString() {
-        return Arrays.toString(nodes);
+        String returnString = "[";
+        for (int nodeIndex=0; nodeIndex<this.nodes.length-1; nodeIndex++) {
+            returnString += this.nodes[nodeIndex] + ", ";
+        }
+        returnString += this.nodes[this.nodes.length-1] + "]";
+        return returnString;
     }
 }

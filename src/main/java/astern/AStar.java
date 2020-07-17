@@ -26,7 +26,7 @@ public class AStar {
 
     public AStar(final UndirectedGraph graph) {
         this.graph = graph;
-        final int numberOfNodes = graph.getMaxNumberOfNodes();
+        final int numberOfNodes = UndirectedGraph.getMaxNumberOfNodes();
         this.queue = new AStarNodeQueue(this);
         this.parent = new int[numberOfNodes];
         this.visited = new boolean[numberOfNodes];
@@ -94,7 +94,7 @@ public class AStar {
      */
 
     private void initializeStates() {
-        for(int nodeIndex=0; nodeIndex<graph.getMaxNumberOfNodes(); nodeIndex++) {
+        for(int nodeIndex=0; nodeIndex<UndirectedGraph.getMaxNumberOfNodes(); nodeIndex++) {
             this.parent[nodeIndex] = -1;
             this.visited[nodeIndex] = false;
             this.fScore[nodeIndex] = Double.POSITIVE_INFINITY;

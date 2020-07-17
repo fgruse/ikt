@@ -158,7 +158,12 @@ public class NodeList {
      */
     @Override
     public String toString() {
-        return Arrays.toString(this.nodes);
+        String returnString = "[";
+        for (int nodeIndex=0; nodeIndex<this.size(); nodeIndex++) {
+            returnString += this.nodes[nodeIndex] + ", ";
+        }
+        returnString += this.nodes[this.size()-1] + "]";
+        return returnString;
     }
 
     /**

@@ -126,7 +126,7 @@ public class UndirectedGraph {
      * Gibt die maximale Anzahl an Knoten im Graphen zurück
      * @return maximal Anzahl an Knoten im Graphen
      */
-    public int getMaxNumberOfNodes() {
+    public static int getMaxNumberOfNodes() {
         return MAX_NUMBER_OF_NODES;
     }
 }
