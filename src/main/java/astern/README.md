@@ -1,6 +1,6 @@
 # IKT Projekt - A* Algorithmus
 
-von [Anne Gliesche](https://github.com/spielogabi), [Anna-Frieda Gruse](https://github.com/cosmoem), [Sophie Schröder](https://github.com/sophieschrder), [Yasmin Yelken](https://github.com/yyasemin), [Laura Zaworski](https://github.com/LauraZaworski)
+von [Anne Gliesche](https://github.com/spielogabi), [Anna-Frieda Gruse](https://github.com/fgruse), [Sophie Schröder](https://github.com/sophieschrder), [Yasmin Yelken](https://github.com/yyasemin), [Laura Zaworski](https://github.com/LauraZaworski)
 
 Dieses Projekt ist im Rahmen der Lehrveranstaltung "IKT" an der HTW Berlin im SS 20 entstanden.
 
